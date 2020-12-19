@@ -10,7 +10,7 @@ Batch Size = 128 (training) and 1024 (testing) across all versions. LR = 0.01 ti
 
 
 Here is a summary table:- <br />
-<center>
+
 | **Model Version** | **Maximum Validation Accuracy** | **Epoch No.** | **No. of Parameters** | **Decription of Change from Previous Version**  |
 |---:|---:|---:|---:|---:|
 | Version 0| 98.80% | 19 | 13,680  |  None (Base Version) |
@@ -19,14 +19,12 @@ Here is a summary table:- <br />
 | Version 3| 99.47% | 12 | 17,730  |  Addition of Dropout |
 | Version 4| 99.51% | 11 | 17,730  |  Addition of LR Scheduler |
 | Version 5| 99.52% | 16 | 17,730  |  Addition of Data Augmentation |
-</center>
 
 ## **Version 0 (Base Case):**
 
 This is the first version of the CNN model without any additional changes. Following is the architecture for reference:- <br />
 Total No. of Parameters: **13,680**
 
-<center>
 |        **Layer (type)**     |         **Output Shape**       |  **Parameter**   |
 |-------------------------|----------------------------|----------|
 |           Conv2d-1      |    [-1, 10, 28, 28]        |     100  |
@@ -37,7 +35,6 @@ Total No. of Parameters: **13,680**
 |         MaxPool2d-6     |       [-1, 30, 7, 7]       |        0 |
 |            Conv2d-7     |       [-1, 10, 5, 5]       |    2,710 |
 |         AvgPool2d-8     |       [-1, 10, 1, 1]       |        0 |
-</center>
 
 Maximum Test Accuracy Acheived : **98.8%** (at Epoch 19) <br />
 Corresponding Train Accuracy   : **99.1%** (at Epoch 19)
@@ -50,7 +47,6 @@ Corresponding Train Accuracy   : **99.1%** (at Epoch 19)
 The number of kernels in each conv layers was changed (so that greater number of kernels are used as we go deeper) and the kernels are in multiples of 10. The final maxpool layer is mooved further up the netowrk (away from the output layer). <br />
 Total No. of Parameters: **17,490**
 
-<center>
 |       **Layer (type)**      |         **Output Shape**       |   **Parameter**   |
 |-------------------------|----------------------------|----------|
 |           Conv2d-1      |     [-1, 10, 28, 28]       |     90   |
@@ -63,8 +59,7 @@ Total No. of Parameters: **17,490**
 |           Conv2d-8      |       [-1, 30, 4, 4]       | 5,400    |
 |           Conv2d-9      |       [-1, 10, 2, 2]       | 2,700    |
 |       AvgPool2d-10      |       [-1, 10, 1, 1]       |     0    |
-</center>
-  
+
 Maximum Test Accuracy Acheived : **99.2%** (at Epoch 18) <br />
 Corresponding Train Accuracy   : **99.5%** (at Epoch 18)
 
@@ -76,7 +71,6 @@ Corresponding Train Accuracy   : **99.5%** (at Epoch 18)
 A batchnorm layer was added after every convolutional layer to reduce the covariate shift in the weights of the layer, and help the model in converging faster. <br />
 Total No. of Parameters: **17,730**
 
-<center>
 |       **Layer (type)**      |         **Output Shape**       |   **Parameter**   |
 |-------------------------|----------------------------|----------|
 |            Conv2d-1     |      [-1, 10, 28, 28]      |        90|
@@ -95,7 +89,6 @@ Total No. of Parameters: **17,730**
 |      **BatchNorm2d-14**     |        [-1, 30, 4, 4]      |        60|
 |           Conv2d-15     |        [-1, 10, 2, 2]      |     2,700|
 |        AvgPool2d-16     |        [-1, 10, 1, 1]      |         0|
-</center>
  
 Maximum Test Accuracy Acheived : **99.9%** (at Epoch 11) <br />
 Corresponding Train Accuracy   : **99.3%** (at Epoch 11)
@@ -108,7 +101,6 @@ Corresponding Train Accuracy   : **99.3%** (at Epoch 11)
 A droput layer was added just before the 1st maxpool layer in the network, which would randomly dropuout 5% of the input channels in a forward pass. This helped in acheiving our goal of obtaining greater than 99.4% accuracy in the validation set. We will further explore the effect of learning rate and data augmentation. <br />
 Total No. of Parameters: **17,730**
 
-<center>
 |       **Layer (type)**      |         **Output Shape**       |   **Parameter**   |
 |-------------------------|----------------------------|----------|
 |           Conv2d-1      |    [-1, 10, 28, 28]        |     90   |
@@ -128,7 +120,6 @@ Total No. of Parameters: **17,730**
 |     BatchNorm2d-15      |      [-1, 30, 4, 4]        |     60   |
 |          Conv2d-16      |      [-1, 10, 2, 2]        |  2,700   |
 |       AvgPool2d-17      |      [-1, 10, 1, 1]        |      0   |
-</center>
 
 Maximum Test Accuracy Acheived : **99.47%** (at Epoch 12) <br />
 Corresponding Train Accuracy   : **99.83%** (at Epoch 12)

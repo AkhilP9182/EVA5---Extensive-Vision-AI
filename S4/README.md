@@ -5,7 +5,7 @@ Batch Size = 128 (training) and 1024 (testing) across all versions. LR = 0.01 ti
 
 ### **Results on the final version (Version 5):**
 
-![prediction_vs_groundTruth][https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/prediction_vs_groundTruth.png?raw=true]
+![prediction_vs_groundTruth](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/prediction_vs_groundTruth.png?raw=true)
 
 
 ## **Version 0 (Base Case):**
@@ -142,6 +142,6 @@ Corresponding Train Accuracy   : **99.08%** (at Epoch 16)
 
 Below are the loss and accuracy plots for the final version 5 of the network.
 
-![case_5_loss][https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/case_5_loss.png?raw=true 'Version 5 Loss']
+![case_5_loss](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/case_5_loss.png?raw=true)
 
-![case_5_acc][https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/case_5_acc.png?raw=true 'Version 5 Accuracy']
+![case_5_acc](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/case_5_acc.png?raw=true 'Version 5 Accuracy')

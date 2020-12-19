@@ -1,0 +1,93 @@
+Epoch:1
+Train Set: Mean loss: 0.0498, Train Accuracy: 59122/60000 (98.5%)
+Test Set : Mean loss: 0.0477, Test Accuracy : 9869/10000 (98.7%)
+
+
+Epoch:2
+Train Set: Mean loss: 0.0325, Train Accuracy: 59428/60000 (99.0%)
+Test Set : Mean loss: 0.0339, Test Accuracy : 9900/10000 (99.0%)
+
+
+Epoch:3
+Train Set: Mean loss: 0.0280, Train Accuracy: 59483/60000 (99.1%)
+Test Set : Mean loss: 0.0340, Test Accuracy : 9886/10000 (98.9%)
+
+
+Epoch:4
+Train Set: Mean loss: 0.0208, Train Accuracy: 59621/60000 (99.4%)
+Test Set : Mean loss: 0.0297, Test Accuracy : 9908/10000 (99.1%)
+
+
+Epoch:5
+Train Set: Mean loss: 0.0143, Train Accuracy: 59767/60000 (99.6%)
+Test Set : Mean loss: 0.0237, Test Accuracy : 9924/10000 (99.2%)
+
+
+Epoch:6
+Train Set: Mean loss: 0.0163, Train Accuracy: 59703/60000 (99.5%)
+Test Set : Mean loss: 0.0269, Test Accuracy : 9914/10000 (99.1%)
+
+
+Epoch:7
+Train Set: Mean loss: 0.0110, Train Accuracy: 59837/60000 (99.7%)
+Test Set : Mean loss: 0.0247, Test Accuracy : 9925/10000 (99.2%)
+
+
+Epoch:8
+Train Set: Mean loss: 0.0089, Train Accuracy: 59878/60000 (99.8%)
+Test Set : Mean loss: 0.0256, Test Accuracy : 9920/10000 (99.2%)
+
+
+Epoch:9
+Train Set: Mean loss: 0.0078, Train Accuracy: 59890/60000 (99.8%)
+Test Set : Mean loss: 0.0247, Test Accuracy : 9911/10000 (99.1%)
+
+
+Epoch:10
+Train Set: Mean loss: 0.0071, Train Accuracy: 59915/60000 (99.9%)
+Test Set : Mean loss: 0.0255, Test Accuracy : 9924/10000 (99.2%)
+
+
+Epoch:11
+Train Set: Mean loss: 0.0042, Train Accuracy: 59964/60000 (99.9%)
+Test Set : Mean loss: 0.0226, Test Accuracy : 9928/10000 (99.3%)
+
+
+Epoch:12
+Train Set: Mean loss: 0.0041, Train Accuracy: 59958/60000 (99.9%)
+Test Set : Mean loss: 0.0240, Test Accuracy : 9922/10000 (99.2%)
+
+
+Epoch:13
+Train Set: Mean loss: 0.0030, Train Accuracy: 59983/60000 (100.0%)
+Test Set : Mean loss: 0.0236, Test Accuracy : 9927/10000 (99.3%)
+
+
+Epoch:14
+Train Set: Mean loss: 0.0029, Train Accuracy: 59984/60000 (100.0%)
+Test Set : Mean loss: 0.0236, Test Accuracy : 9927/10000 (99.3%)
+
+
+Epoch:15
+Train Set: Mean loss: 0.0026, Train Accuracy: 59989/60000 (100.0%)
+Test Set : Mean loss: 0.0248, Test Accuracy : 9928/10000 (99.3%)
+
+
+Epoch:16
+Train Set: Mean loss: 0.0016, Train Accuracy: 59998/60000 (100.0%)
+Test Set : Mean loss: 0.0243, Test Accuracy : 9927/10000 (99.3%)
+
+
+Epoch:17
+Train Set: Mean loss: 0.0013, Train Accuracy: 59998/60000 (100.0%)
+Test Set : Mean loss: 0.0245, Test Accuracy : 9928/10000 (99.3%)
+
+
+Epoch:18
+Train Set: Mean loss: 0.0009, Train Accuracy: 59999/60000 (100.0%)
+Test Set : Mean loss: 0.0243, Test Accuracy : 9930/10000 (99.3%)
+
+
+Epoch:19
+Train Set: Mean loss: 0.0009, Train Accuracy: 59999/60000 (100.0%)
+Test Set : Mean loss: 0.0245, Test Accuracy : 9928/10000 (99.3%)

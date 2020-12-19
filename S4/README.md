@@ -1,6 +1,7 @@
 # **Objective:**
 Our objective is to build a CNN model with less than 20,000 total parameters which is able to acheive a validation accuracy of 99.4% on the MNIST test data. We will go through 5 versions of CNN models and see the effect of intorducing a new technique/method at each step. The final test accuracy obtained is : **99.52%** when we reach Version 5.
 
+Batch Size = 128 (training) and 1024 (testing) across all versions. LR = 0.01 till version 3.
 
 ## **Version 0 (Base Case):**
 
@@ -78,7 +79,7 @@ Corresponding Train Accuracy   : **99.3%** (at Epoch 11)
 **Observations**: With the introduction of batchnorm, the test accuracy reached 98.7% within 1 epoch. We were able to reach an accuracy of 99.3 for validation data, but also observed that at many instances the the accuracy on training data was nearly 100%, which points to the problem of overfitting. To combat that issue, we will see the use of droput in the next layer.
 
 
-## **Case 3 (BatchNorm + 1 Dropout Layer):**
+## **Version 3 (BatchNorm + 1 Dropout Layer):**
 
 A droput layer was added just before the 1st maxpool layer in the network, which would randomly dropuout 5% of the input channels in a forward pass. This helped in acheiving our goal of obtaining greater than 99.4% accuracy in the validation set. We will further explore the effect of learning rate and data augmentation. <br />
 Total No. of Parameters: **17,730**
@@ -110,4 +111,26 @@ Corresponding Train Accuracy   : **99.83%** (at Epoch 12)
 
 ## **Case 4 (BatchNorm + 1 Dropout Layer + Learning Rate Update):**
 
-## **Case 4 (BatchNorm + 1 Dropout Layer + Learning Rate Update + Data Augmentation):**
+The next change we will introduce is updating the learning rate (reducing LR by a factor of 0.2) after 10 epoch of training. This will help to reduce the loss even further on the training set, and increase the accuracy on validation set. We will use `optim.lr_scheduler.StepLR()` for updating the learning rate.
+
+LR = `0.01` till epoch 10, then `0.008` till epoch 19 (last epoch)}
+
+Total No. of Parameters: **17,730** <br />
+*[Network architecure the same as Version 3]*
+
+Maximum Test Accuracy Acheived : **99.51%** (at Epoch 11) <br />
+Corresponding Train Accuracy   : **99.92%** (at Epoch 11)
+
+**Observations**: We have now reached a validation accuracy of 99.51 %, the difference between train and test accuracy is still relatively large. In order to introudce more variation in the training data and make the model more robust, we will introduce image augmentations in the next version.
+
+## **Case 5(BatchNorm + 1 Dropout Layer + Learning Rate Update + Data Augmentation):**
+
+We will now apply a number of affine transformation to the training data (`torch.transforms.RandomAffine()`) in order to introudce greater variance in training data. We will be Rotating the image in the range `(-20°,+20°)`, translate by `(0.1) x dimension length` pixels in the 4 cardinal directions, and random scaling between `(0.95,1.05)` times the image size.
+
+Total No. of Parameters: **17,730** <br />
+*[Network architecure the same as Version 3]*
+
+Maximum Test Accuracy Acheived : **99.52%** (at Epoch 16) <br />
+Corresponding Train Accuracy   : **99.08%** (at Epoch 16)
+
+**Observations**: We are now seeing a a completely opposite trend in terms of loss and accuracy when compared to the other models. The test accuracy is actually higher (for all epochs) than the train accuracy now. We have, thus, addressed the issue of overfitting, and acheived a maximum accuracy of **99.52%** on validation dataset.

@@ -1,14 +1,17 @@
 # **Objective:**
-Our objective is to build a CNN model with less than 20,000 total parameters which is able to acheive a validation accuracy of 99.4% on the MNIST test data. We will go through 5 versions of CNN models and see the effect of intorducing a new technique/method at each step. The final test accuracy obtained is : **99.52%** when we reach Version 5.
+Our objective is to build a CNN model with less than 20,000 total parameters which is able to acheive a validation accuracy of 99.4% on the MNIST test data. We will go through 5 versions of CNN models and see the effect of intorducing a new technique/method at each step. The final test accuracy obtained is : **99.52%** with **17,730** total parameters  at Version 5.
 
 Batch Size = 128 (training) and 1024 (testing) across all versions. LR = 0.01 till version 3.
+
+### **Results on the final version (Version 5):** <br />
+![prediction_vs_groundTruth][https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/prediction_vs_groundTruth.png]<br />
 
 ## **Version 0 (Base Case):**
 
 This is the first version of the CNN model without any additional changes. Following is the architecture for reference:- <br />
 Total No. of Parameters: **13,680**
 
-|        Layer (type)     |         Output Shape       |  Param  |
+|        Layer (type)     |         Output Shape       |  Param   |
 |-------------------------|----------------------------|----------|
 |           Conv2d-1      |    [-1, 10, 28, 28]        |     100  |
 |            Conv2d-2     |     [-1, 20, 28, 28]       |    1,820 |
@@ -134,3 +137,7 @@ Maximum Test Accuracy Acheived : **99.52%** (at Epoch 16) <br />
 Corresponding Train Accuracy   : **99.08%** (at Epoch 16)
 
 **Observations**: We are now seeing a a completely opposite trend in terms of loss and accuracy when compared to the other models. The test accuracy is actually higher (for all epochs) than the train accuracy now. We have, thus, addressed the issue of overfitting, and acheived a maximum accuracy of **99.52%** on validation dataset.
+
+Below are the loss and accuracy plots for the final version 5 of the network. <br />
+![case_5_loss][https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/case_5_loss.png]<br />
+![case_5_acc][https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/case_5_acc.png]

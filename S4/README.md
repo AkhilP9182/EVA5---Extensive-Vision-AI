@@ -7,13 +7,22 @@ Batch Size = 128 (training) and 1024 (testing) across all versions. LR = 0.01 ti
 
 ![prediction_vs_groundTruth](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/prediction_vs_groundTruth.png?raw=true)
 
+Here is a summary table:- <br />
+**| Model Version | Maximum Validation Accuracy | Epoch No. | No. of Parameters | Decription of Change from Previous Version  |**
+|---|---|---|---|---|
+| Version 0| 98.80% | 19 | 13,680  |  None (Base Version) |
+| Version 1| 99.20% | 18 | 17,490  |  Network Architechure Change |
+| Version 2| 99.30% | 11 | 17,730  |  Addition of Batchnorm |
+| Version 3| 99.47% | 12 | 17,730  |  Addition of Dropout |
+| Version 4| 99.51% | 11 | 17,730  |  Addition of LR Scheduler |
+| Version 5| 99.52% | 16 | 17,730  |  Addition of Data Augmentation |
 
 ## **Version 0 (Base Case):**
 
 This is the first version of the CNN model without any additional changes. Following is the architecture for reference:- <br />
 Total No. of Parameters: **13,680**
 
-|        Layer (type)     |         Output Shape       |  Param   |
+**|        Layer (type)     |         Output Shape       |  Parameter   |**
 |-------------------------|----------------------------|----------|
 |           Conv2d-1      |    [-1, 10, 28, 28]        |     100  |
 |            Conv2d-2     |     [-1, 20, 28, 28]       |    1,820 |
@@ -35,7 +44,7 @@ Corresponding Train Accuracy   : **99.1%** (at Epoch 19)
 The number of kernels in each conv layers was changed (so that greater number of kernels are used as we go deeper) and the kernels are in multiples of 10. The final maxpool layer is mooved further up the netowrk (away from the output layer). <br />
 Total No. of Parameters: **17,490**
 
-|       Layer (type)      |         Output Shape       |   Param #|
+**|       Layer (type)      |         Output Shape       |   Parameter   |**
 |-------------------------|----------------------------|----------|
 |           Conv2d-1      |     [-1, 10, 28, 28]       |     90   |
 |           Conv2d-2      |     [-1, 20, 28, 28]       |   1,800  |
@@ -48,8 +57,8 @@ Total No. of Parameters: **17,490**
 |           Conv2d-9      |       [-1, 10, 2, 2]       | 2,700    |
 |       AvgPool2d-10      |       [-1, 10, 1, 1]       |     0    |
 
-Maximum Test Accuracy Acheived : **99.5%** (at Epoch 18) <br />
-Corresponding Train Accuracy   : **99.2%** (at Epoch 18)
+Maximum Test Accuracy Acheived : **99.2%** (at Epoch 18) <br />
+Corresponding Train Accuracy   : **99.5%** (at Epoch 18)
 
 **Observations**: There is a marginal improvement in test accuracy with the architecture change, but train accuracy has improved considerably more. We also observe that the max accuracy is reached at nearly the last epoch, meaning the convergence to optima is quite slow. Hence, we may need to whiten the outputs at each step, i.e, use batchnorm, after each convolution layer in the next step.
 
@@ -59,7 +68,7 @@ Corresponding Train Accuracy   : **99.2%** (at Epoch 18)
 A batchnorm layer was added after every convolutional layer to reduce the covariate shift in the weights of the layer, and help the model in converging faster. <br />
 Total No. of Parameters: **17,730**
 
-|       Layer (type)      |         Output Shape       |   Param #|
+**|       Layer (type)      |         Output Shape       |   Parameter   |**
 |-------------------------|----------------------------|----------|
 |            Conv2d-1     |      [-1, 10, 28, 28]      |        90|
 |      **BatchNorm2d-2**     |      [-1, 10, 28, 28]      |        20|
@@ -89,7 +98,7 @@ Corresponding Train Accuracy   : **99.3%** (at Epoch 11)
 A droput layer was added just before the 1st maxpool layer in the network, which would randomly dropuout 5% of the input channels in a forward pass. This helped in acheiving our goal of obtaining greater than 99.4% accuracy in the validation set. We will further explore the effect of learning rate and data augmentation. <br />
 Total No. of Parameters: **17,730**
 
-|       Layer (type)      |         Output Shape       |   Param #|
+**|       Layer (type)      |         Output Shape       |   Parameter   |**
 |-------------------------|----------------------------|----------|
 |           Conv2d-1      |    [-1, 10, 28, 28]        |     90   |
 |      BatchNorm2d-2      |    [-1, 10, 28, 28]        |     20   |

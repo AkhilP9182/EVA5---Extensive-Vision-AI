@@ -39,7 +39,7 @@ Total No. of Parameters: **13,680**
 Maximum Test Accuracy Acheived : **98.8%** (at Epoch 19) <br />
 Corresponding Train Accuracy   : **99.1%** (at Epoch 19)
 
-**Observations**: We see that the maxpool layer is very close to the final output Global Average pooling layer. There are also some architecural changes which can be implemented (change in the number of kernels, positions of layers, etc.). The next version addresses these issues.
+**Observations**: We see that the maxpool layer is very close to the final output Global Average pooling layer. There are also some architecural changes which can be implemented (change in the number of kernels, positions of layers, etc.). The next version addresses these issues. ([Link to Version 0 Logs](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/training_logs_all_versions/version_0.txt))
 
 
 ## **Version 1 (Architecture Change):**
@@ -63,7 +63,7 @@ Total No. of Parameters: **17,490**
 Maximum Test Accuracy Acheived : **99.2%** (at Epoch 18) <br />
 Corresponding Train Accuracy   : **99.5%** (at Epoch 18)
 
-**Observations**: There is a marginal improvement in test accuracy with the architecture change, but train accuracy has improved considerably more. We also observe that the max accuracy is reached at nearly the last epoch, meaning the convergence to optima is quite slow. Hence, we may need to whiten the outputs at each step, i.e, use batchnorm, after each convolution layer in the next step.
+**Observations**: There is a marginal improvement in test accuracy with the architecture change, but train accuracy has improved considerably more. We also observe that the max accuracy is reached at nearly the last epoch, meaning the convergence to optima is quite slow. Hence, we may need to whiten the outputs at each step, i.e, use batchnorm, after each convolution layer in the next step.([Link to Version 1 Logs](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/training_logs_all_versions/version_1.txt))
 
 
 ## **Version 2 (Addition of BatchNorm after every convolution layer):**
@@ -93,8 +93,7 @@ Total No. of Parameters: **17,730**
 Maximum Test Accuracy Acheived : **99.9%** (at Epoch 11) <br />
 Corresponding Train Accuracy   : **99.3%** (at Epoch 11)
 
-**Observations**: With the introduction of batchnorm, the test accuracy reached 98.7% within 1 epoch. We were able to reach an accuracy of 99.3 for validation data, but also observed that at many instances the the accuracy on training data was nearly 100%, which points to the problem of overfitting. To combat that issue, we will see the use of droput in the next layer.
-
+**Observations**: With the introduction of batchnorm, the test accuracy reached 98.7% within 1 epoch. We were able to reach an accuracy of 99.3 for validation data, but also observed that at many instances the the accuracy on training data was nearly 100%, which points to the problem of overfitting. To combat that issue, we will see the use of droput in the next layer.([Link to Version 2 Logs](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/training_logs_all_versions/version_2.txt))
 
 ## **Version 3 (BatchNorm + 1 Dropout Layer):**
 
@@ -124,9 +123,9 @@ Total No. of Parameters: **17,730**
 Maximum Test Accuracy Acheived : **99.47%** (at Epoch 12) <br />
 Corresponding Train Accuracy   : **99.83%** (at Epoch 12)
 
-**Observations**: Introducing a small dropout of 5% after only 1 layer enabled us to cross the threshold of 99.4% accuracy on the validation set in one of the test runs. We also observed that the difference between train and test accuracy is lower now, meaning the model has become more robust.
+**Observations**: Introducing a small dropout of 5% after only 1 layer enabled us to cross the threshold of 99.4% accuracy on the validation set in one of the test runs. We also observed that the difference between train and test accuracy is lower now, meaning the model has become more robust.([Link to Version 3 Logs](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/training_logs_all_versions/version_3.txt))
 
-## **Case 4 (BatchNorm + 1 Dropout Layer + Learning Rate Update):**
+## **Version 4 (BatchNorm + 1 Dropout Layer + Learning Rate Update):**
 
 The next change we will introduce is updating the learning rate (reducing LR by a factor of 0.2) after 10 epoch of training. This will help to reduce the loss even further on the training set, and increase the accuracy on validation set. We will use `optim.lr_scheduler.StepLR()` for updating the learning rate.
 
@@ -138,9 +137,9 @@ Total No. of Parameters: **17,730** <br />
 Maximum Test Accuracy Acheived : **99.51%** (at Epoch 11) <br />
 Corresponding Train Accuracy   : **99.92%** (at Epoch 11)
 
-**Observations**: We have now reached a validation accuracy of 99.51 %, the difference between train and test accuracy is still relatively large. In order to introudce more variation in the training data and make the model more robust, we will introduce image augmentations in the next version.
+**Observations**: We have now reached a validation accuracy of 99.51 %, the difference between train and test accuracy is still relatively large. In order to introudce more variation in the training data and make the model more robust, we will introduce image augmentations in the next version.([Link to Version 4 Logs](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/training_logs_all_versions/version_4.txt))
 
-## **Case 5(BatchNorm + 1 Dropout Layer + Learning Rate Update + Data Augmentation):**
+## **Version 5(BatchNorm + 1 Dropout Layer + Learning Rate Update + Data Augmentation):**
 
 We will now apply a number of affine transformation to the training data (`torch.transforms.RandomAffine()`) in order to introudce greater variance in training data. We will be Rotating the image in the range `(-20°,+20°)`, translate by `(0.1) x dimension length` pixels in the 4 cardinal directions, and random scaling between `(0.95,1.05)` times the image size.
 
@@ -150,7 +149,7 @@ Total No. of Parameters: **17,730** <br />
 Maximum Test Accuracy Acheived : **99.52%** (at Epoch 16) <br />
 Corresponding Train Accuracy   : **99.08%** (at Epoch 16)
 
-**Observations**: We are now seeing a a completely opposite trend in terms of loss and accuracy when compared to the other models. The test accuracy is actually higher (for all epochs) than the train accuracy now. We have, thus, addressed the issue of overfitting, and acheived a maximum accuracy of **99.52%** on validation dataset.
+**Observations**: We are now seeing a a completely opposite trend in terms of loss and accuracy when compared to the other models. The test accuracy is actually higher (for all epochs) than the train accuracy now. We have, thus, addressed the issue of overfitting, and acheived a maximum accuracy of **99.52%** on validation dataset.([Link to Version 5 Logs](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/training_logs_all_versions/version_5.txt))
 
 Below are the loss and accuracy plots for the final version 5 of the network.
 

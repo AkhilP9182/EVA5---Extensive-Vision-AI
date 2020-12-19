@@ -90,8 +90,8 @@ Total No. of Parameters: **17,730**
 |           Conv2d-15     |        [-1, 10, 2, 2]      |     2,700|
 |        AvgPool2d-16     |        [-1, 10, 1, 1]      |         0|
  
-Maximum Test Accuracy Acheived : **99.9%** (at Epoch 11) <br />
-Corresponding Train Accuracy   : **99.3%** (at Epoch 11)
+Maximum Test Accuracy Acheived : **99.3%** (at Epoch 11) <br />
+Corresponding Train Accuracy   : **99.9%** (at Epoch 11)
 
 **Observations**: With the introduction of batchnorm, the test accuracy reached 98.7% within 1 epoch. We were able to reach an accuracy of 99.3 for validation data, but also observed that at many instances the the accuracy on training data was nearly 100%, which points to the problem of overfitting. To combat that issue, we will see the use of droput in the next layer.([Link to Version 2 Logs](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/training_logs_all_versions/version_2.txt))
 

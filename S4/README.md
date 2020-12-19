@@ -27,18 +27,17 @@ Corresponding Train Accuracy   : **99.1%** (at Epoch 19)
 ## **Version 1 (Architecture Change):**
 
 The number of kernels in each conv layers was changed (so that greater number of kernels are used as we go deeper) and the kernels are in multiples of 10. The final maxpool layer is mooved further up the netowrk (away from the output layer). <br />
-Total No. of Parameters: 17,490
+Total No. of Parameters: **17,490**
 
-|-------------------------|----------------------------|----------| 
 |       Layer (type)      |         Output Shape       |   Param #|
 |-------------------------|----------------------------|----------|
 |           Conv2d-1      |     [-1, 10, 28, 28]       |     90   |
 |           Conv2d-2      |     [-1, 20, 28, 28]       |   1,800  |
-|           Conv2d-3      |     [-1, 30, 28, 28]       |    5,400 |
+|           **Conv2d-3**      |     [-1, 30, 28, 28]       |    5,400 |
 |        MaxPool2d-4      |     [-1, 30, 14, 14]       |       0  |
 |           Conv2d-5      |     [-1, 10, 14, 14]       |     300  |
 |           Conv2d-6      |     [-1, 20, 12, 12]       |   1,800  |
-|        MaxPool2d-7      |       [-1, 20, 6, 6]       |     0    |
+|        **MaxPool2d-7**      |       [-1, 20, 6, 6]       |     0    |
 |           Conv2d-8      |       [-1, 30, 4, 4]       | 5,400    |
 |           Conv2d-9      |       [-1, 10, 2, 2]       | 2,700    |
 |       AvgPool2d-10      |       [-1, 10, 1, 1]       |     0    |
@@ -57,19 +56,19 @@ Total No. of Parameters: **17,730**
 |       Layer (type)      |         Output Shape       |   Param #|
 |-------------------------|----------------------------|----------|
 |            Conv2d-1     |      [-1, 10, 28, 28]      |        90|
-|       BatchNorm2d-2     |      [-1, 10, 28, 28]      |        20|
+|      **BatchNorm2d-2**     |      [-1, 10, 28, 28]      |        20|
 |            Conv2d-3     |      [-1, 20, 28, 28]      |     1,800|
-|       BatchNorm2d-4     |      [-1, 20, 28, 28]      |        40|
+|      **BatchNorm2d-4**     |      [-1, 20, 28, 28]      |        40|
 |            Conv2d-5     |      [-1, 30, 28, 28]      |     5,400|
-|       BatchNorm2d-6     |      [-1, 30, 28, 28]      |        60|
+|      **BatchNorm2d-6**     |      [-1, 30, 28, 28]      |        60|
 |         MaxPool2d-7     |      [-1, 30, 14, 14]      |         0|
 |            Conv2d-8     |      [-1, 10, 14, 14]      |       300|
-|       BatchNorm2d-9     |      [-1, 10, 14, 14]      |        20|
+|      **BatchNorm2d-9**     |      [-1, 10, 14, 14]      |        20|
 |           Conv2d-10     |      [-1, 20, 12, 12]      |     1,800|
-|      BatchNorm2d-11     |      [-1, 20, 12, 12]      |        40|
+|      **BatchNorm2d-11**     |      [-1, 20, 12, 12]      |        40|
 |        MaxPool2d-12     |        [-1, 20, 6, 6]      |         0|
 |           Conv2d-13     |        [-1, 30, 4, 4]      |     5,400|
-|      BatchNorm2d-14     |        [-1, 30, 4, 4]      |        60|
+|      **BatchNorm2d-14**     |        [-1, 30, 4, 4]      |        60|
 |           Conv2d-15     |        [-1, 10, 2, 2]      |     2,700|
 |        AvgPool2d-16     |        [-1, 10, 1, 1]      |         0|
 
@@ -81,7 +80,33 @@ Corresponding Train Accuracy   : **99.3%** (at Epoch 11)
 
 ## **Case 3 (BatchNorm + 1 Dropout Layer):**
 
+A droput layer was added just before the 1st maxpool layer in the network, which would randomly dropuout 5% of the input channels in a forward pass. This helped in acheiving our goal of obtaining greater than 99.4% accuracy in the validation set. We will further explore the effect of learning rate and data augmentation. <br />
+Total No. of Parameters: **17,730**
 
+|       Layer (type)      |         Output Shape       |   Param #|
+|-------------------------|----------------------------|----------|
+|           Conv2d-1      |    [-1, 10, 28, 28]        |     90   |
+|      BatchNorm2d-2      |    [-1, 10, 28, 28]        |     20   |
+|           Conv2d-3      |    [-1, 20, 28, 28]        |  1,800   |
+|      BatchNorm2d-4      |    [-1, 20, 28, 28]        |     40   |
+|           Conv2d-5      |    [-1, 30, 28, 28]        |  5,400   |
+|      BatchNorm2d-6      |    [-1, 30, 28, 28]        |     60   |
+|        **Dropout2d-7**      |    [-1, 30, 28, 28]        |      0   |
+|        MaxPool2d-8      |    [-1, 30, 14, 14]        |      0   |
+|           Conv2d-9      |    [-1, 10, 14, 14]        |    300   |
+|     BatchNorm2d-10      |    [-1, 10, 14, 14]        |     20   |
+|          Conv2d-11      |    [-1, 20, 12, 12]        |  1,800   |
+|     BatchNorm2d-12      |    [-1, 20, 12, 12]        |     40   |
+|       MaxPool2d-13      |      [-1, 20, 6, 6]        |      0   |
+|          Conv2d-14      |      [-1, 30, 4, 4]        |  5,400   |
+|     BatchNorm2d-15      |      [-1, 30, 4, 4]        |     60   |
+|          Conv2d-16      |      [-1, 10, 2, 2]        |  2,700   |
+|       AvgPool2d-17      |      [-1, 10, 1, 1]        |      0   |
+
+Maximum Test Accuracy Acheived : **99.47%** (at Epoch 12) <br />
+Corresponding Train Accuracy   : **99.83%** (at Epoch 12)
+
+**Observations**: Introducing a small dropout of 5% after only 1 layer enabled us to cross the threshold of 99.4% accuracy on the validation set in one of the test runs. We also observed that the difference between train and test accuracy is lower now, meaning the model has become more robust.
 
 ## **Case 4 (BatchNorm + 1 Dropout Layer + Learning Rate Update):**
 

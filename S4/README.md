@@ -5,9 +5,9 @@ Batch Size = 128 (training) and 1024 (testing) across all versions. LR = 0.01 ti
 
 ### **Results on the final version (Version 5):**
 
-<center>
+
 ![prediction_vs_groundTruth](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/prediction_vs_groundTruth.png?raw=true)
-</center>
+
 
 Here is a summary table:- <br />
 <center>
@@ -28,7 +28,7 @@ Total No. of Parameters: **13,680**
 
 <center>
 |        **Layer (type)**     |         **Output Shape**       |  **Parameter**   |
-|-------------------------:|----------------------------:|----------:|
+|-------------------------|----------------------------|----------|
 |           Conv2d-1      |    [-1, 10, 28, 28]        |     100  |
 |            Conv2d-2     |     [-1, 20, 28, 28]       |    1,820 |
 |         MaxPool2d-3     |     [-1, 20, 14, 14]       |        0 |
@@ -52,7 +52,7 @@ Total No. of Parameters: **17,490**
 
 <center>
 |       **Layer (type)**      |         **Output Shape**       |   **Parameter**   |
-|-------------------------:|----------------------------:|----------:|
+|-------------------------|----------------------------|----------|
 |           Conv2d-1      |     [-1, 10, 28, 28]       |     90   |
 |           Conv2d-2      |     [-1, 20, 28, 28]       |   1,800  |
 |           **Conv2d-3**      |     [-1, 30, 28, 28]       |    5,400 |
@@ -78,7 +78,7 @@ Total No. of Parameters: **17,730**
 
 <center>
 |       **Layer (type)**      |         **Output Shape**       |   **Parameter**   |
-|-------------------------:|----------------------------:|----------:|
+|-------------------------|----------------------------|----------|
 |            Conv2d-1     |      [-1, 10, 28, 28]      |        90|
 |      **BatchNorm2d-2**     |      [-1, 10, 28, 28]      |        20|
 |            Conv2d-3     |      [-1, 20, 28, 28]      |     1,800|
@@ -110,7 +110,7 @@ Total No. of Parameters: **17,730**
 
 <center>
 |       **Layer (type)**      |         **Output Shape**       |   **Parameter**   |
-|-------------------------:|----------------------------:|----------:|
+|-------------------------|----------------------------|----------|
 |           Conv2d-1      |    [-1, 10, 28, 28]        |     90   |
 |      BatchNorm2d-2      |    [-1, 10, 28, 28]        |     20   |
 |           Conv2d-3      |    [-1, 20, 28, 28]        |  1,800   |
@@ -162,8 +162,8 @@ Corresponding Train Accuracy   : **99.08%** (at Epoch 16)
 **Observations**: We are now seeing a a completely opposite trend in terms of loss and accuracy when compared to the other models. The test accuracy is actually higher (for all epochs) than the train accuracy now. We have, thus, addressed the issue of overfitting, and acheived a maximum accuracy of **99.52%** on validation dataset.
 
 Below are the loss and accuracy plots for the final version 5 of the network.
-<center>
+
 ![case_5_loss](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/case_5_loss.png?raw=true)
 
 ![case_5_acc](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S4/case_5_acc.png?raw=true 'Version 5 Accuracy')
-</center>
+

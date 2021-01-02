@@ -14,6 +14,7 @@ Our objective is to obtain create a CNN model which acheived >=99.4% validation 
 --- 
 
 # **Version 1**
+### **Notebook Link**: ([S5_1.ipynb](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S5/S5_1.ipynb)) <br/>
 ### **Target**: <br/>
 Get the CNN digit recognition pipeline ready, and use kernels in multiples of 10 [10,20,30] for obtaining a basic model architecture with fewer parameters.
 
@@ -28,9 +29,12 @@ Get the CNN digit recognition pipeline ready, and use kernels in multiples of 10
 *	The number of kernels at each step can still be reduced to obtain a model having less than 10,000 total parameters (currently there are 2 layers with 5.4k parameters each, and 1 layer with 8k parameters).
 *	The convolution layer at the end is for reducing the 5x5 feature maps to 1x1 values as the output of the model, but it is using a large sized kernel to do so. We can replace that with a Global Average Pooling layer in next version and hence, reduce parameters.
 
+![version_1_loss](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S5/images/S5_1.png?raw=true)
+
 ---
 
 # **Version 2**
+### **Notebook Link**: ([S5_2.ipynb](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S5/S5_2.ipynb)) <br/>
 ### **Target**: <br/>
 Reduce the parameters below 10k and add a GAP layer for the same at the end (instead of a conv layer). Also add a BatchNorm layer after every conv layer to achieve faster covnergence.
 
@@ -45,9 +49,12 @@ Reduce the parameters below 10k and add a GAP layer for the same at the end (ins
 *	There is still an overfitting problem, since there is significant difference between train and test accuracy. The next version will have a Dropout layer after every conv layer to address this issue.
 *   Looking at the loss (or accuracy) plot, it's visible that the training process is not gradually converging, but fluctuates a lot towards the middle. We will try to increase convergence midway through the training by using a learning rate schedule (reducing the Learning rate)
 
+![version_2_loss](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S5/images/S5_2.png?raw=true)
+
 ---
 
 # **Version 3**
+### **Notebook Link**: ([S5_3.ipynb](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S5/S5_3.ipynb)) <br/>
 ### **Target**: <br/>
 Reduce overfitting by introducing Dropout after every conv layer, and reduce learning rate as the training progresses to obtain greater accuracy.
 
@@ -61,9 +68,12 @@ Reduce overfitting by introducing Dropout after every conv layer, and reduce lea
 *	We started with an LR of 0.02, and the LR was reduced every 4 epochs, so it was decreased 3 times during training by a factor of 0.5 after every 4 epochs (0.02 to 0.01 to 0.005).
 *	Test Accuracy seems to plateau, but that is because of the reduction in learning rate. We will use image augmentation techniques (random roation) to make the model more robust to variation in the validation data and increase test accuracy beyond 99.4%  within 15 epochs, in the next version.
 
+![version_3_loss](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S5/images/S5_3.png?raw=true)
+
 ---
 
 # **Version 4**
+### **Notebook Link**: ([S5_4.ipynb](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S5/S5_4.ipynb)) <br/>
 ### **Target**: <br/>
 *	Increase validation accuracy by introducing variations in the training dataset using Image Augmentation (random rotation by 7 degrees clockwise and anticlockwise)
 
@@ -76,3 +86,5 @@ Reduce overfitting by introducing Dropout after every conv layer, and reduce lea
 *	After adding a small random rotation of only 7 degrees, the test accuracy is now consistently higher than the train accuracy for all epochs (which is a slighlty underfitting conditiong), meaning our test data had few images which were transformed in an affine manner w.r.t the training images.
 *	The target of 99.4% test accuracy was achieved in Epoch 11, and it was maintained till epoch 15.
 *	From the accuracy plots it is visible that after every 4 epochs, the rate of increase in accuracy is decreasing, but the curve is still going up, meaning training for more epochs could possibly increase the validation accuracy.
+
+![version_4_loss](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S5/images/S5_4.png?raw=true)

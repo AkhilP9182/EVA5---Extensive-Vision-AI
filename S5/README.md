@@ -5,7 +5,7 @@ Our objective is to obtain create a CNN model which acheived >=99.4% validation 
 *	Must acheive >=99.4% (and should maintain it in the last few epochs of training)
 
 | **Model Version** | **Maximum Test Accuracy** | **Maximum Train Accuracy** | **No. of Parameters** | **Decription of Change from Previous Version**  |
-|---:|---:|---:|---:|---:|---:|
+|---:|---:|---:|---:|---:|
 | Version 1| 98.99% | 99.48% | 28,090  |  Base version of CNN with reduced parameters |
 | Version 2| 99.27% | 99.65% | 9,304  |  Addition of Batchnorm and GAP Layer, with further parameter reduction |
 | Version 3| 99.31% | 99.50% | 9,304  |  Addition of Dropout and LR (step) Scheduler |

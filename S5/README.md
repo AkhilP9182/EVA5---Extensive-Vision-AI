@@ -36,7 +36,7 @@ Get the CNN digit recognition pipeline ready, and use kernels in multiples of 10
 # **Version 2**
 ### **Notebook Link**: ([S5_2.ipynb](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S5/S5_2.ipynb)) <br/>
 ### **Target**: <br/>
-Reduce the parameters below 10k and add a GAP layer for the same at the end (instead of a conv layer). Also add a BatchNorm layer after every conv layer to achieve faster covnergence.
+Reduce the parameters below 10k and add a GAP layer for the same at the end (instead of a conv layer). Also add a BatchNorm layer after every conv layer to achieve faster convergence.
 
 ### **Results**: <br/>
 *	Parameters: **9,304**

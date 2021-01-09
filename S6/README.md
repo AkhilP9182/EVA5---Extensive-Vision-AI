@@ -9,7 +9,7 @@ No. of Parameters in the model (including the BN or GBN layer): **9,304** (of wh
 | Version 2| 99.44% | 99.45% |  Model with L2 Regularization and BN |
 | Version 3| 98.62% | 98.96% |  Model with L1 & L2 Regularization and BN |
 | Version 4| 99.48% | 99.43% |  Model with GBN |
-| Version 5| 98.41% | 98.81% |  Model with L1 & L2 Regularization and BN |
+| Version 5| 98.41% | 98.81% |  Model with L1 & L2 Regularization and GBN |
 
 *	**Epochs**: Each model was trained for 25 epochs (Dropout and RandomRotation was kept intact for all the models).
 *	**Batch Size**: Model versions which had a normal Batchnorm layer (1,2,3) were trained with a training batch size of 128. Model versions which had a Ghost Batchnorm layer (4,5) were trained with a lower training batch size of 32. A lower batch size increases the stochastic variance in GBN while training, thus increasing the regularization effect of GBN.
@@ -22,7 +22,8 @@ Following are the Validation Accuracy and Validation loss graphs generated on tr
 
 ![validation_loss_5_versions](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S6/images/val_loss_5_versions.png?raw=true)
 
-From the above graph it can be seen that:-
+From the above graph it can be seen that:- <br/>
+*	The train and validation accuracies are very close to each other for each version, which means regularization is doing a good job in **reducing overfitting**.
 *	L2 regularization (combined with BN) gave the best result of all the five versions.
 *	The combination of L1 and L2 gave worse accuracy than when either of the regularizations was taken one at a time, for both model with BN and GBN. It could also be that the coefficients of regularization was large, and the penalty applied by the combination of regularizers made it harder for the model to reach the most optimum state.
 *	GBN alone gave almost the best result, but on combining with L1 and L2, it gave the worst accuracy result, indicating that over-regularization could also lead to adverse effects. GBN, when used alone, was able to reach the 99.0% accuracy within 5 epochs, which the combination of L1+L2+GBN could not reach in 25 epochs.
@@ -32,3 +33,11 @@ From the above graph it can be seen that:-
 
 Following is the graph of misclassified images (prediciton which were incorrect) by the Version 4 (GBN) only model:- <br/>
 ![S6_GBN_misclassified_images](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S6/images/S6_GBN_misclassified_images.png?raw=true)
+
+There is a folder 'models' which contain the parameters for the best models (based on test accuracy) which were seen during training for each version. <br/>
+You can load the model you wish to use for inferencing using the following snippet of code (call the model = Net() class right before it):- <br/>
+`GBN_MODEL_PATH = '../mnist_data/models/S6_best_model_version_4'`
+`model = Net(BN_type='GBN')`
+`model.load_state_dict(torch.load(GBN_MODEL_PATH))`
+`model = model.to(device)`
+`model.eval()`

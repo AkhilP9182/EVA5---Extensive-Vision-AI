@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 class BatchNorm(nn.BatchNorm2d):
     def __init__(self, num_features, eps=1e-05, momentum=0.1, weight=True, bias=True):
@@ -46,14 +47,3 @@ class Depth_Sep_Conv(nn.Module):
         out = self.depthwise(x)
         out = self.pointwise(out)
         return out
-
-def Batch_Norm_Layer(self,channels,BN_type='BN'):
-    '''
-        BN_type == 'BN' -> GhostBatchNorm()
-        BN_type == 'GBN' -> nn.BatchNorm2d()
-        Selects the type of Batch Normalization which is to be used
-    '''
-    if BN_type == 'GBN':
-        return GhostBatchNorm(channels, num_splits=2, weight=False)
-    elif BN_type == 'BN':
-        return nn.BatchNorm2d(channels)

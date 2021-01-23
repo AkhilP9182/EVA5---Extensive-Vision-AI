@@ -5,6 +5,7 @@ import torchvision
 import torchvision.datasets
 import torch.utils.data
 import torchvision.transforms as transforms
+import matplotlin.pyplot as plt
 
 def train_loader_cifar10(download_folder, batch_size=4, 
                          shuffle=True, num_workers=1,

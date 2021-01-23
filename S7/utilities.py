@@ -4,7 +4,7 @@ import torchvision
 import torchvision.datasets
 import torch.utils.data
 import torchvision.transforms as transforms
-import matplotlin.pyplot as plt
+import matplotlib.pyplot as plt
 import config
 
 to_tensor = transforms.Compose([transforms.ToTensor()])

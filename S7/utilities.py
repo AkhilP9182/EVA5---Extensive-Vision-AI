@@ -19,8 +19,7 @@ def train_loader_cifar10(trainset, shuffle=True, num_workers=2,
                                           ,transforms.Normalize(mean, std)])
 
     trainloader      = torch.utils.data.DataLoader(trainset, batch_size = config.BATCH_SIZE_TRAIN, 
-                                                shuffle=shuffle, num_workers=config.num_workers,
-                                                pin_memory=True)
+                                                shuffle=shuffle, num_workers=config.num_workers)
 
     return trainloader
 
@@ -32,8 +31,7 @@ def test_loader_cifar10(testset, shuffle=False, num_workers=2,
     test_transform = transforms.Compose([transforms.ToTensor(),
                                          transforms.Normalize(mean, std)])
     testloader     = torch.utils.data.DataLoader(testset, batch_size = config.BATCH_SIZE_TEST,
-                                                shuffle=shuffle, num_workers=config.num_workers, 
-                                                pin_memory=True)
+                                                shuffle=shuffle, num_workers=config.num_workers)
 
     return testloader
 

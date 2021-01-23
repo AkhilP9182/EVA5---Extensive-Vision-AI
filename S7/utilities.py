@@ -15,7 +15,7 @@ def train_loader_cifar10(download_folder, batch_size=4,
         train_transform  = transforms.Compose([torchvision.transforms.RandomAffine(degrees=8, translate=(0.1,0.1), scale=(0.95,1.05))
                                                 ,transforms.ToTensor()
                                                 ,transforms.Normalize(mean, std)])
-    else:
+    else if transform_type == None:
         train_transform = transforms.Compose([transforms.ToTensor()])
         
 
@@ -33,7 +33,7 @@ def test_loader_cifar10(download_folder, batch_size=4,
     if transform_type == "norm":
         test_transform = transforms.Compose([transforms.ToTensor()
                                             ,transforms.Normalize(mean, std)])
-    else:
+    else if transform_type == None:
         test_transform = transforms.Compose([transforms.ToTensor()])
         
 

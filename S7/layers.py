@@ -1,48 +1,117 @@
-import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
-class BatchNorm(nn.BatchNorm2d):
-    def __init__(self, num_features, eps=1e-05, momentum=0.1, weight=True, bias=True):
-        super().__init__(num_features, eps=eps, momentum=momentum)
-        self.weight.data.fill_(1.0)
-        self.bias.data.fill_(0.0)
-        self.weight.requires_grad = weight
-        self.bias.requires_grad = bias
+class Net(nn.Module):
+    '''
+        nn.Module is the base class for all Neural Network Modules, the Net() class is inheriting the base class nn.Module
+        A Module contains the state of the layers in a Neural network and methods for feedforward and training the model
+    '''
+    # BN_flag 0: normal batchnorm; 1: Ghost batchnorm
+    def Batch_Norm_Layer(self,channels,BN_type='BN'):
+        '''
+            BN_type == 1 -> GhostBatchNorm()
+            BN_type != 1 -> nn.BatchNorm2d()
+            Selects the type of Batch Normalization which is to be used
+        '''
+        if BN_type == 'GBN':
+            return GhostBatchNorm(channels, num_splits=2, weight=False)
+        elif BN_type == 'BN':
+            return nn.BatchNorm2d(channels)
 
-class GhostBatchNorm(BatchNorm):
-    def __init__(self, num_features, num_splits, **kw):
-        super().__init__(num_features, **kw)
-        self.num_splits = num_splits
-        self.register_buffer('running_mean', torch.zeros(num_features * self.num_splits))
-        self.register_buffer('running_var', torch.ones(num_features * self.num_splits))
+    def __init__(self,BN_type='BN'):
+        super(Net, self).__init__() 
+        # Conv Block 1
+        drop = 0.05          # Dropout Percentage
+        self.convblock1 = nn.Sequential(
+                                                                   #     INPUT     |    OUTPUT      | Receptive Field
 
-    def train(self, mode=True):
-        if (self.training is True) and (mode is False):  # lazily collate stats when we are going to use them
-            self.running_mean = torch.mean(self.running_mean.view(self.num_splits, self.num_features), dim=0).repeat(
-                self.num_splits)
-            self.running_var = torch.mean(self.running_var.view(self.num_splits, self.num_features), dim=0).repeat(
-                self.num_splits)
-        return super().train(mode)
+            nn.Conv2d(3, 32, 3,padding=1,bias=False),              # In: 32x32x3  | Out: 32x32x32  |      RF:3
+            Batch_Norm_Layer(self,32,BN_type),                     # In: 32x32x32  | Out: 32x32x32  |      RF:3
+            nn.ReLU(),                                             # In: 32x32x32  | Out: 32x32x32  |      RF:3
+            nn.Dropout(p=drop),                                    # In: 32x32x32  | Out: 32x32x32  |      RF:3
 
-    def forward(self, input):
-        N, C, H, W = input.shape
-        if self.training or not self.track_running_stats:
-            return F.batch_norm(
-                input.view(-1, C * self.num_splits, H, W), self.running_mean, self.running_var,
-                self.weight.repeat(self.num_splits), self.bias.repeat(self.num_splits),
-                True, self.momentum, self.eps).view(N, C, H, W)
-        else:
-            return F.batch_norm(
-                input, self.running_mean[:self.num_features], self.running_var[:self.num_features],
-                self.weight, self.bias, False, self.momentum, self.eps)
+            nn.Conv2d(32, 64, 3,padding=1,bias=False),             # In: 32x32x32  | Out: 32x32x64  |      RF:5
+            Batch_Norm_Layer(self,64,BN_type),                     # In: 32x32x64  | Out: 32x32x64  |      RF:5
+            nn.ReLU(),                                             # In: 32x32x64  | Out: 32x32x64  |      RF:5
+            nn.Dropout(p=drop),                                    # In: 32x32x64  | Out: 32x32x64  |      RF:5
 
-class Depth_Sep_Conv(nn.Module):
-    def __init__(self, nin, nout, kernel_size=3,padding=1, bias=False):
-        super(Depth_Sep_Conv, self).__init__()
-        self.depthwise = nn.Conv2d(nin, nin, kernel_size=kernel_size, padding=padding, groups=nin, bias = bias)
-        self.pointwise = nn.Conv2d(nin, nout, kernel_size=1, bias = bias)
+            nn.Conv2d(64, 128, 3,bias=False,padding=0,dilation=2),  # In: 32x32x64  | Out: 32x32x128 |      RF:9    ---> Dilated Convolution
+            Batch_Norm_Layer(self,128,BN_type),                     # In: 32x32x32  | Out: 32x32x32  |      RF:9
+            nn.ReLU(),                                             # In: 32x32x32  | Out: 32x32x32  |      RF:9
+            nn.Dropout(p=drop)                                     # In: 32x32x32  | Out: 32x32x32  |      RF:9
+        )
+        
+        # Transition 1 
+        self.transblock1 = nn.Sequential(
+            nn.MaxPool2d(2, 2),                                    # In: 32x32x32  | Out: 16x16x32  |      RF:10
+            nn.Conv2d(128, 32, 1,bias=False),                       # In: 16x16x128 | Out: 16x16x32 |      RF:10    ---> Pointwise Convolution
+            Batch_Norm_Layer(self,32,BN_type),                     # In: 16x16x32  | Out: 16x16x32  |      RF:10
+            nn.ReLU(),                                             # In: 16x16x32  | Out: 16x16x32  |      RF:10
+            nn.Dropout(p=drop)                                     # In: 16x16x32  | Out: 16x16x32  |      RF:10
+        )
+
+        # Conv Block 2 
+        self.convblock2 = nn.Sequential(
+            nn.Conv2d(32, 64, 3,bias=False,padding=1),             # In: 16x16x32  | Out: 16x16x64  |      RF:14
+            Batch_Norm_Layer(self,64,BN_type),                     # In: 16x16x64  | Out: 16x16x64  |      RF:14
+            nn.ReLU(),                                             # In: 16x16x64  | Out: 16x16x64  |      RF:14
+            nn.Dropout(p=drop),                                    # In: 16x16x64  | Out: 16x16x64  |      RF:14
+
+            nn.Conv2d(64, 128, 3,bias=False,padding=1),            # In: 16x16x32  | Out: 16x16x64  |      RF:18
+            Batch_Norm_Layer(self,128,BN_type),                    # In: 16x16x64  | Out: 16x16x64  |      RF:18
+            nn.ReLU(),                                             # In: 16x16x64  | Out: 16x16x64  |      RF:18
+            nn.Dropout(p=drop),                                    # In: 16x16x64  | Out: 16x16x64  |      RF:18
+
+            Depth_Sep_Conv(128, 256, 3,padding=1),       # In: 16x16x64  | Out: 14x14x256 |      RF:22    ---> Depthwise Separable Convolution
+            Batch_Norm_Layer(self,256,BN_type),                    # In: 16x16x256 | Out: 14x14x256 |      RF:22
+            nn.ReLU(),                                             # In: 16x16x256 | Out: 14x14x256 |      RF:22
+            nn.Dropout(p=drop)                                     # In: 16x16x256 | Out: 14x14x256 |      RF:22
+        )
+
+        # Transition 1 
+        self.transblock2 = nn.Sequential(
+            nn.MaxPool2d(2, 2),                                    # In: 14x14x256 | Out: 7x7x256   |      RF:24
+            nn.Conv2d(256, 64, 1,bias=False),                      # In: 7x7x256   | Out: 7x7x64    |      RF:24    ---> Pointwise Convolution
+            Batch_Norm_Layer(self,64,BN_type),                     # In: 7x7x64    | Out: 7x7x64    |      RF:24
+            nn.ReLU(),                                             # In: 7x7x64    | Out: 7x7x64    |      RF:24
+            nn.Dropout(p=drop)                                     # In: 7x7x64    | Out: 7x7x64    |      RF:24
+        )
+
+        self.convblock3 = nn.Sequential(
+            nn.Conv2d(64, 128, 3,bias=False,padding=1),            # In: 7x7x32  | Out: 7x7x32  |      RF:32
+            Batch_Norm_Layer(self,128,BN_type),                     # In: 7x7x32  | Out: 7x7x32  |      RF:32
+            nn.ReLU(),                                             # In: 7x7x32  | Out: 7x7x32  |      RF:32
+            nn.Dropout(p=drop),                                    # In: 7x7x32  | Out: 7x7x32  |      RF:32
+
+            nn.Conv2d(128, 128, 3,bias=False,padding=1),           # In: 7x7x32  | Out: 7x7x64  |      RF:40
+            Batch_Norm_Layer(self,128,BN_type),                    # In: 7x7x64  | Out: 7x7x64  |      RF:40
+            nn.ReLU(),                                             # In: 7x7x64  | Out: 7x7x64  |      RF:40
+            nn.Dropout(p=drop),                                    # In: 7x7x64  | Out: 7x7x64  |      RF:40
+
+            Depth_Sep_Conv(128, 256, 3,padding=1),      # In: 7x7x64  | Out: 5x5x128 |  RF:48    ---> Depthwise Separable Convolution
+            Batch_Norm_Layer(self,256,BN_type),                    # In: 5x5x128 | Out: 5x5x128 |  RF:48
+            nn.ReLU(),                                             # In: 5x5x128 | Out: 5x5x128 |  RF:48
+            nn.Dropout(p=drop)                                     # In: 5x5x128 | Out: 5x5x128 |  RF:48
+        )
+        # Output Block                
+        self.outblock = nn.Sequential(
+            nn.Conv2d(256, 64, 3,bias=False),                      # In: 5x5x256 | Out:  3x3x64  |      RF:56
+            nn.Conv2d(64, num_classes, 3,bias=False),              # In: 5x5x256 | Out:  3x3x64  |      RF:64
+            nn.AvgPool2d(kernel_size=3)                            # In: 3x3x10  | Out:  1x1x10  |      RF:64
+        )
+        
 
     def forward(self, x):
-        out = self.depthwise(x)
-        out = self.pointwise(out)
-        return out
+        '''
+            Method for passing the input image through the network to get the output
+            x here is a tensor at each stage, with the dimensions [N, C, H, W]:- 
+            {N = No. of Samples, C = No. of channels, H = Height of Image, W = Width of Image}
+        '''
+        x = self.convblock1(x)
+        x = self.transblock1(x)
+        x = self.convblock2(x)
+        x = self.transblock2(x)
+        x = self.convblock3(x)
+        x = self.outblock(x)
+        x = x.view(-1, 10)               # Reshaping the tensor to a tensor with 10 columns and appropriate numbe of rows
+        return F.log_softmax(x,dim=1)    # Computing Softmax of the obtained output

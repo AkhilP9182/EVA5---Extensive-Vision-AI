@@ -63,14 +63,17 @@ def dataset_info(train_set,test_set):
     print("Number of images for validation: {}".format(len(test_set)))
     return "Data loading done!"
 
-def imshow(img,mean,std):
-    img = (img*std) + mean     # unnormalize
-    npimg = img.numpy()
-    plt.imshow(np.transpose(npimg, (1, 2, 0)))
-
-
-def plot_images(loader,mean,std):
-    dataiter = iter(trainloader)
+def plot_images(loader, rows=5, cols=5,mean=(0,0,0),std=(1,1,1),classes=[0,0,0]):
+    dataiter = iter(loader)
     images, labels = dataiter.next()
-    imshow(torchvision.utils.make_grid(images),nrow=5)
-    print(' '.join('%5s' % classes[labels[j]] for j in range(5)))
+
+    num_row     = rows
+    num_col     = cols
+    num_images  = num_row*num_col
+
+    fig, axes = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
+    for i in range(num_images):
+        ax = axes[i//num_col, i%num_col]
+        ax.imshow(images[i].numpy().transpose((1,2,0))*std_cifar10 + mean_cifar10)
+        ax.set_title('Label: {}'.format(classes[labels[i]]))
+    plt.show()

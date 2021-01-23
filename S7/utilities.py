@@ -78,7 +78,7 @@ def plot_images(loader, rows=5, cols=5,mean=(0,0,0),std=(1,1,1),classes=[0,0,0])
         ax.set_title('Label: {}'.format(classes[labels[i]]))
     plt.show()
 
-def plot_loss(train_loss_vals,test_loss_vals,epochs)
+def plot_loss(train_loss_vals,test_loss_vals,epochs):
     x = [i for i in range(0,epochs)]
     y_train = train_loss_vals
     y_test = test_loss_vals
@@ -96,7 +96,7 @@ def plot_loss(train_loss_vals,test_loss_vals,epochs)
     loss.savefig('S7/loss.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
 
 
-def plot_acc(train_acc_vals,test_acc_vals,epochs)
+def plot_acc(train_acc_vals,test_acc_vals,epochs):
     x = [i for i in range(0,epochs)]
     y_train = train_acc_vals
     y_test = test_acc_vals

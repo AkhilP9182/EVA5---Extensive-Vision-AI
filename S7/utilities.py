@@ -74,6 +74,6 @@ def plot_images(loader, rows=5, cols=5,mean=(0,0,0),std=(1,1,1),classes=[0,0,0])
     fig, axes = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
     for i in range(num_images):
         ax = axes[i//num_col, i%num_col]
-        ax.imshow(images[i].numpy().transpose((1,2,0))*std_cifar10 + mean_cifar10)
+        ax.imshow(images[i].numpy().transpose((1,2,0))*std + mean)
         ax.set_title('Label: {}'.format(classes[labels[i]]))
     plt.show()

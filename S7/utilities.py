@@ -5,7 +5,7 @@ import torchvision.datasets
 import torch.utils.data
 import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
-import config
+import S7.config as config
 
 to_tensor = transforms.Compose([transforms.ToTensor()])
 

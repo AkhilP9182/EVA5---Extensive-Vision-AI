@@ -9,7 +9,7 @@ import S7.config as config
 
 to_tensor = transforms.Compose([transforms.ToTensor()])
 
-def train_loader_cifar10(trainset, shuffle=True, num_workers=2,pinned_memory=True,
+def train_loader_cifar10(trainset, shuffle=True, num_workers=2,pin_memory=True,
                          mean = (0.5,0.5,0.5), std = (0.5,0.5,0.5)):
     """
     Function for getting a trainloader iterator
@@ -20,11 +20,11 @@ def train_loader_cifar10(trainset, shuffle=True, num_workers=2,pinned_memory=Tru
 
     trainloader      = torch.utils.data.DataLoader(trainset, batch_size = config.BATCH_SIZE_TRAIN, 
                                                 shuffle=shuffle, num_workers=config.num_workers,
-                                                pinned_memory=config.pinned_memory)
+                                                pin_memory=config.pin_memory)
 
     return trainloader
 
-def test_loader_cifar10(testset, shuffle=False, num_workers=2,pinned_memory=True,
+def test_loader_cifar10(testset, shuffle=False, num_workers=2,pin_memory=True,
                          mean = (0.5,0.5,0.5), std = (0.5,0.5,0.5)):
     """
     Function for getting a testloader iterator
@@ -33,7 +33,7 @@ def test_loader_cifar10(testset, shuffle=False, num_workers=2,pinned_memory=True
                                          transforms.Normalize(mean, std)])
     testloader     = torch.utils.data.DataLoader(testset, batch_size = config.BATCH_SIZE_TEST,
                                                 shuffle=shuffle, num_workers=config.num_workers, 
-                                                pin_memory=config.pinned_memory)
+                                                pin_memory=config.pin_memory)
 
     return testloader
 
@@ -69,11 +69,11 @@ def dataset_info(train_set,test_set):
     classes_in_train = list(set(train_set.targets))
     classes_in_test  = list(set(test_set.targets))
     assert np.isin(classes_in_test,classes_in_train).all()
-    num_classes = len(set(train_set.targets)),"No.of Classes in Train != No. of Classes in Test"
+    num_classes = len(set(train_set.targets))
     print("Number of classes in CIFAR10   : {}".format(num_classes))
     print("Number of images for training  : {}".format(len(train_set)))
     print("Number of images for validation: {}".format(len(test_set)))
-    return 0
+    return "Data loading done!"
 
 def imshow(img,mean,std):
     img = (img*std) + mean     # unnormalize

@@ -1,7 +1,7 @@
 import torch
 
-USE_CUDE = torch.cuda.is_available()
-DEVICE   = torch.device("cuda" if use_cuda else "cpu")
+USE_CUDA = torch.cuda.is_available()
+DEVICE   = torch.device("cuda" if USE_CUDA else "cpu")
 
 BATCH_SIZE_TRAIN  = 64
 BATCH_SIZE_TEST   = 512

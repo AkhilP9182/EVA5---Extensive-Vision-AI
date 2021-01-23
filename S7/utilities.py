@@ -9,17 +9,21 @@ import S7.config as config
 
 to_tensor = transforms.Compose([transforms.ToTensor()])
 
+train_transform  = transforms.Compose([torchvision.transforms.RandomAffine(degrees=8, translate=(0.1,0.1), scale=(0.95,1.05))
+                                          ,transforms.ToTensor()
+                                          ,transforms.Normalize((0.49186122, 0.48266134, 0.44720834), (0.24699295, 0.24340236, 0.26160896))])
+
+test_transform = transforms.Compose([transforms.ToTensor(),
+                                         transforms.Normalize((0.49186122, 0.48266134, 0.44720834), (0.24699295, 0.24340236, 0.26160896))])
+
 def train_loader_cifar10(trainset, shuffle=True, num_workers=2,
                          mean = (0.5,0.5,0.5), std = (0.5,0.5,0.5)):
     """
     Function for getting a trainloader iterator
     """
-    train_transform  = transforms.Compose([torchvision.transforms.RandomAffine(degrees=8, translate=(0.1,0.1), scale=(0.95,1.05))
-                                          ,transforms.ToTensor()
-                                          ,transforms.Normalize(mean, std)])
+    
 
-    trainloader      = torch.utils.data.DataLoader(trainset, batch_size = config.BATCH_SIZE_TRAIN, 
-                                                shuffle=shuffle, num_workers=config.num_workers)
+    trainloader      = torch.utils.data.DataLoader(trainset, batch_size = config.BATCH_SIZE_TRAIN,shuffle=shuffle, num_workers=config.num_workers)
 
     return trainloader
 
@@ -28,8 +32,7 @@ def test_loader_cifar10(testset, shuffle=False, num_workers=2,
     """
     Function for getting a testloader iterator
     """
-    test_transform = transforms.Compose([transforms.ToTensor(),
-                                         transforms.Normalize(mean, std)])
+
     testloader     = torch.utils.data.DataLoader(testset, batch_size = config.BATCH_SIZE_TEST,
                                                 shuffle=shuffle, num_workers=config.num_workers)
 

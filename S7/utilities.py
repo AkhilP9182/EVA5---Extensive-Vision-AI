@@ -9,7 +9,7 @@ import S7.config as config
 
 to_tensor = transforms.Compose([transforms.ToTensor()])
 
-def train_loader_cifar10(trainset, shuffle=True, num_workers=2,pin_memory=True,
+def train_loader_cifar10(trainset, shuffle=True, num_workers=2,
                          mean = (0.5,0.5,0.5), std = (0.5,0.5,0.5)):
     """
     Function for getting a trainloader iterator
@@ -20,11 +20,11 @@ def train_loader_cifar10(trainset, shuffle=True, num_workers=2,pin_memory=True,
 
     trainloader      = torch.utils.data.DataLoader(trainset, batch_size = config.BATCH_SIZE_TRAIN, 
                                                 shuffle=shuffle, num_workers=config.num_workers,
-                                                pin_memory=config.pin_memory)
+                                                pin_memory=True)
 
     return trainloader
 
-def test_loader_cifar10(testset, shuffle=False, num_workers=2,pin_memory=True,
+def test_loader_cifar10(testset, shuffle=False, num_workers=2,
                          mean = (0.5,0.5,0.5), std = (0.5,0.5,0.5)):
     """
     Function for getting a testloader iterator
@@ -33,7 +33,7 @@ def test_loader_cifar10(testset, shuffle=False, num_workers=2,pin_memory=True,
                                          transforms.Normalize(mean, std)])
     testloader     = torch.utils.data.DataLoader(testset, batch_size = config.BATCH_SIZE_TEST,
                                                 shuffle=shuffle, num_workers=config.num_workers, 
-                                                pin_memory=config.pin_memory)
+                                                pin_memory=True)
 
     return testloader
 

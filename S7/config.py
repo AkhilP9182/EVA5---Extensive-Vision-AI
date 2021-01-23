@@ -6,7 +6,12 @@ DEVICE   = torch.device("cuda" if USE_CUDA else "cpu")
 
 BATCH_SIZE_TRAIN  = 128
 BATCH_SIZE_TEST   = 1024
+EPOCHS   = 25
+LR       = 0.001
+MOMENTUM = 0.9
 num_workers = 0
+LR_STEP = 5
+LR_GAMMA = 0.8
 input_size_CIFAR10 = (3, 32, 32)
 
 CIFAR_classes = ('plane', 'car', 'bird', 'cat','deer', 'dog', 'frog', 'horse', 'ship', 'truck')

@@ -6,7 +6,7 @@ DEVICE   = torch.device("cuda" if USE_CUDA else "cpu")
 BATCH_SIZE_TRAIN  = 64
 BATCH_SIZE_TEST   = 512
 num_workers = 0
-pinned_memory = True
+pin_memory = True
 input_size_CIFAR10 = (3, 32, 32)
 
 CIFAR_classes = ('plane', 'car', 'bird', 'cat','deer', 'dog', 'frog', 'horse', 'ship', 'truck')

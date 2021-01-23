@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 
-
 class BatchNorm(nn.BatchNorm2d):
     def __init__(self, num_features, eps=1e-05, momentum=0.1, weight=True, bias=True):
         super().__init__(num_features, eps=eps, momentum=momentum)
@@ -37,11 +36,11 @@ class GhostBatchNorm(BatchNorm):
                 input, self.running_mean[:self.num_features], self.running_var[:self.num_features],
                 self.weight, self.bias, False, self.momentum, self.eps)
 
-class depthwise_separable_conv(nn.Module):
-    def __init__(self, nin, nout):
-        super(depthwise_separable_conv, self).__init__()
-        self.depthwise = nn.Conv2d(nin, nin, kernel_size=3, padding=1, groups=nin)
-        self.pointwise = nn.Conv2d(nin, nout, kernel_size=1)
+class Depth_Sep_Conv(nn.Module):
+    def __init__(self, nin, nout, kernel_size=3,padding=1, bias=False):
+        super(Depth_Sep_Conv, self).__init__()
+        self.depthwise = nn.Conv2d(nin, nin, kernel_size=kernel_size, padding=padding, groups=nin, bias = bias)
+        self.pointwise = nn.Conv2d(nin, nout, kernel_size=1, bias = bias)
 
     def forward(self, x):
         out = self.depthwise(x)

@@ -1,6 +1,7 @@
 
 import numpy as np
 import torch
+import torchvision
 import torchvision.datasets
 import torch.utils.data
 import torchvision.transforms as transforms
@@ -63,10 +64,25 @@ def dataset_info(train_set,test_set):
         'num_classes' which will be equal to the number of kernel that will be used later in the 
         final convolution layer.
     """
-    classes_in_train = train_set.targets.unique().numpy()
-    classes_in_test  = test_set.targets.unique().numpy()
+    classes_in_train = set(train_set.targets).numpy()
+    classes_in_test  = set(test_set.targets).numpy()
     assert np.isin(classes_in_test,classes_in_train).all()
     num_classes = len(train_set.targets.unique().numpy())
     print('Number of classes in CIFAR10: {}'.format(num_classes))
     print('Number of images for training  : {}'.format(len(train_set)))
     print('Number of images for validation: {}'.format(len(test_set)))
+
+def imshow(img):
+    img = img / 2 + 0.5     # unnormalize
+    npimg = img.numpy()
+    plt.imshow(np.transpose(npimg, (1, 2, 0)))
+
+
+def disp_imag(loader):
+    # get some random training images
+    dataiter = iter(loader)
+    images, labels = dataiter.next()
+    # show images
+    imshow(torchvision.utils.make_grid(images))
+    # print labels
+    print(' '.join('%5s' % classes[labels[j]] for j in range(10)))

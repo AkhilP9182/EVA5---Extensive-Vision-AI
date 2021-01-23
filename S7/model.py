@@ -12,7 +12,7 @@ class Net(nn.Module):
     
     
 
-    def __init__(self,BN_type='BN'):
+    def __init__(self,BN_type='BN',num_classes=10):
         def BN_Layer(self,channels,BN_type='BN'):
             '''
                 BN_type == 'BN' -> GhostBatchNorm()

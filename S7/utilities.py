@@ -1,5 +1,6 @@
 
 import numpy as np
+import torch
 import torchvision.datasets
 import torch.utils.data
 import torchvision.transforms as transforms
@@ -29,7 +30,7 @@ def test_loader_cifar10(download_folder, batch_size=4,
                                         ,transforms.Normalize(mean, std)])
 
     testset    = torchvision.datasets.CIFAR10(root=download_folder, train=False, download=True, transform=test_transform)
-    testloader = torch.utils.data.DataLoader(trainset, batch_size = batch_size, shuffle=shuffle, num_workers=num_workers, pin_memory=True)
+    testloader = torch.utils.data.DataLoader(testset, batch_size = batch_size, shuffle=shuffle, num_workers=num_workers, pin_memory=True)
 
     return testset, testloader
 
@@ -64,6 +65,6 @@ def dataset_info(train_set,test_set):
     classes_in_test  = test_set.targets.unique().numpy()
     assert np.isin(classes_in_test,classes_in_train).all()
     num_classes = len(train_set.targets.unique().numpy())
-    print('Number of classes in MNIST: {}'.format(num_classes))
+    print('Number of classes in CIFAR10: {}'.format(num_classes))
     print('Number of images for training  : {}'.format(len(train_set)))
     print('Number of images for validation: {}'.format(len(test_set)))

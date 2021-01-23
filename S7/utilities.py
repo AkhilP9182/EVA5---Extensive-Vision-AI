@@ -53,7 +53,7 @@ def get_mean_std_overall(train_loader,test_loader):
     std  = ((channel_squared_sum/num_batches) - mean**2)**0.5
     return mean,std
 
-def dataset_info(train_set,test_set)
+def dataset_info(train_set,test_set):
     '''
         The following 7 lines are to assert whether both training and test sets have the same number/type of 
         classes (with the same labelling) for classification, and assign the number to a variable 

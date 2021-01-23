@@ -1,4 +1,3 @@
-
 import numpy as np
 import torch
 import torchvision
@@ -6,44 +5,46 @@ import torchvision.datasets
 import torch.utils.data
 import torchvision.transforms as transforms
 import matplotlin.pyplot as plt
+import config
 
-def train_loader_cifar10(download_folder, batch_size=4, 
-                         shuffle=True, num_workers=1,
+to_tensor = transforms.Compose([transforms.ToTensor()])
+
+def train_loader_cifar10(trainset, shuffle=True, num_workers=2,pinned_memory=True,
                          mean = (0.5,0.5,0.5), std = (0.5,0.5,0.5)):
     """
-    Function for getting a trainloader iterator, as well as returns the train dataset
+    Function for getting a trainloader iterator
     """
     train_transform  = transforms.Compose([torchvision.transforms.RandomAffine(degrees=8, translate=(0.1,0.1), scale=(0.95,1.05))
-                                            ,transforms.ToTensor()
-                                            ,transforms.Normalize(mean, std)])
-        
+                                          ,transforms.ToTensor()
+                                          ,transforms.Normalize(mean, std)])
 
-    trainset    = torchvision.datasets.CIFAR10(root=download_folder, train=True, download=True, transform=train_transform)
-    trainloader = torch.utils.data.DataLoader(trainset, batch_size = batch_size, shuffle=shuffle, num_workers=num_workers)
+    trainloader      = torch.utils.data.DataLoader(trainset, batch_size = config.BATCH_SIZE_TRAIN, 
+                                                shuffle=shuffle, num_workers=config.num_workers,
+                                                pinned_memory=config.pinned_memory)
 
-    return trainset, trainloader
+    return trainloader
 
-def test_loader_cifar10(download_folder, batch_size=4, 
-                         shuffle=False, num_workers=1,
+def test_loader_cifar10(testset, shuffle=False, num_workers=2,pinned_memory=True,
                          mean = (0.5,0.5,0.5), std = (0.5,0.5,0.5)):
     """
-    Function for getting a testloader iterator, as well as returns the test dataset
+    Function for getting a testloader iterator
     """
-    test_transform = transforms.Compose([transforms.ToTensor()
-                                            ,transforms.Normalize(mean, std)])
-        
+    test_transform = transforms.Compose([transforms.ToTensor(),
+                                         transforms.Normalize(mean, std)])
+    testloader     = torch.utils.data.DataLoader(testset, batch_size = config.BATCH_SIZE_TEST,
+                                                shuffle=shuffle, num_workers=config.num_workers, 
+                                                pin_memory=config.pinned_memory)
 
-    testset    = torchvision.datasets.CIFAR10(root=download_folder, train=False, download=True, transform=test_transform)
-    testloader = torch.utils.data.DataLoader(testset, batch_size = batch_size, shuffle=shuffle, num_workers=num_workers, pin_memory=True)
+    return testloader
 
-    return testset, testloader
-
-
-def get_mean_std_overall(train_loader,test_loader):
+def get_mean_std_overall(trainset,testset):
     """
-    Function for getting the mean and standard devitation of data in a dataloader iterator
+    Function for getting the mean and standard devitation of dataset (train and test combined)
     """
+    train_loader = torch.utils.data.DataLoader(trainset, batch_size = 1024, shuffle=False, num_workers=1)
+    test_loader  = torch.utils.data.DataLoader(testset, batch_size = 1024, shuffle=False, num_workers=1)
     channel_sum, channel_squared_sum, num_batches = 0,0,0
+
     for data, _ in train_loader:
         channel_sum += torch.mean(data, dim=[0,2,3])
         channel_squared_sum += torch.mean(data**2, dim=[0,2,3])
@@ -65,25 +66,23 @@ def dataset_info(train_set,test_set):
         'num_classes' which will be equal to the number of kernel that will be used later in the 
         final convolution layer.
     """
-    classes_in_train = set(train_set.targets).numpy()
-    classes_in_test  = set(test_set.targets).numpy()
+    classes_in_train = list(set(train_set.targets))
+    classes_in_test  = list(set(test_set.targets))
     assert np.isin(classes_in_test,classes_in_train).all()
-    num_classes = len(train_set.targets.unique().numpy())
-    print('Number of classes in CIFAR10: {}'.format(num_classes))
-    print('Number of images for training  : {}'.format(len(train_set)))
-    print('Number of images for validation: {}'.format(len(test_set)))
+    num_classes = len(set(train_set.targets)),"No.of Classes in Train != No. of Classes in Test"
+    print("Number of classes in CIFAR10   : {}".format(num_classes))
+    print("Number of images for training  : {}".format(len(train_set)))
+    print("Number of images for validation: {}".format(len(test_set)))
+    return 0
 
-def imshow(img):
-    img = img / 2 + 0.5     # unnormalize
+def imshow(img,mean,std):
+    img = (img*std) + mean     # unnormalize
     npimg = img.numpy()
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
 
 
-def disp_imag(loader):
-    # get some random training images
-    dataiter = iter(loader)
+def plot_images(loader,mean,std):
+    dataiter = iter(trainloader)
     images, labels = dataiter.next()
-    # show images
-    imshow(torchvision.utils.make_grid(images))
-    # print labels
-    print(' '.join('%5s' % classes[labels[j]] for j in range(10)))
+    imshow(torchvision.utils.make_grid(images),nrow=5)
+    print(' '.join('%5s' % classes[labels[j]] for j in range(5)))

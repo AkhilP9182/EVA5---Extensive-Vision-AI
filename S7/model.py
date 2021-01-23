@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from S7.layers import BatchNorm,GhostBatchNorm,Depth_Sep_Conv
 
 class Net(nn.Module):
     '''

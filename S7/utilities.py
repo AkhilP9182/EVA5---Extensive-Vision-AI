@@ -6,14 +6,18 @@ import torch.utils.data
 import torchvision.transforms as transforms
 
 def train_loader_cifar10(download_folder, batch_size=4, 
-                         shuffle=True, num_workers=1, 
+                         shuffle=True, num_workers=1, transform_type = None,
                          mean = (0.5,0.5,0.5), std = (0.5,0.5,0.5)):
     """
     Function for getting a trainloader iterator, as well as returns the train dataset
     """
-    train_transform  = transforms.Compose([torchvision.transforms.RandomAffine(degrees=8, translate=(0.1,0.1), scale=(0.95,1.05))
-                                            ,transforms.ToTensor()
-                                            ,transforms.Normalize(mean, std)])
+    if transform_type == "norm":
+        train_transform  = transforms.Compose([torchvision.transforms.RandomAffine(degrees=8, translate=(0.1,0.1), scale=(0.95,1.05))
+                                                ,transforms.ToTensor()
+                                                ,transforms.Normalize(mean, std)])
+    else:
+        train_transform = transforms.Compose([transforms.ToTensor()])
+        
 
     trainset    = torchvision.datasets.CIFAR10(root=download_folder, train=True, download=True, transform=train_transform)
     trainloader = torch.utils.data.DataLoader(trainset, batch_size = batch_size, shuffle=shuffle, num_workers=num_workers)
@@ -21,13 +25,17 @@ def train_loader_cifar10(download_folder, batch_size=4,
     return trainset, trainloader
 
 def test_loader_cifar10(download_folder, batch_size=4, 
-                         shuffle=False, num_workers=1, 
+                         shuffle=False, num_workers=1,  transform_type = None,
                          mean = (0.5,0.5,0.5), std = (0.5,0.5,0.5)):
     """
     Function for getting a testloader iterator, as well as returns the test dataset
     """
-    test_transform = transforms.Compose([transforms.ToTensor()
-                                        ,transforms.Normalize(mean, std)])
+    if transform_type == "norm":
+        test_transform = transforms.Compose([transforms.ToTensor()
+                                            ,transforms.Normalize(mean, std)])
+    else:
+        test_transform = transforms.Compose([transforms.ToTensor()])
+        
 
     testset    = torchvision.datasets.CIFAR10(root=download_folder, train=False, download=True, transform=test_transform)
     testloader = torch.utils.data.DataLoader(testset, batch_size = batch_size, shuffle=shuffle, num_workers=num_workers, pin_memory=True)

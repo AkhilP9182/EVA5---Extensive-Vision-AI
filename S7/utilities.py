@@ -123,6 +123,7 @@ def plot_misclassified(Net,MODEL_PATH, rows=5, cols=5, mean=(0,0,0), std=(1,1,1)
     mis_images = []
     mis_labels = []
     mis_pred   = []
+    device = config.DEVICE
 
     # MODEL_PATH = "S7/models/S7_best_model.model"
     model = Net(BN_type='BN')

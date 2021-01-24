@@ -113,7 +113,8 @@ def plot_acc(train_acc_vals,test_acc_vals,epochs):
     my_dpi = 100
     acc.savefig('S7/accuracy.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
 
-def plot_misclassified(Net,MODEL_PATH, rows=5, cols=5, mean=(0,0,0), std=(1,1,1), classes=[0,0,0]):
+def plot_misclassified(Net,MODEL_PATH,test_loader,
+                        rows=5, cols=5, mean=(0,0,0), std=(1,1,1), classes=[0,0,0]):
     num_row     = 5
     num_col     = 5
     num_images  = num_row*num_col

@@ -18,11 +18,11 @@ The required files are cloned via Github for running the model. Snippet is avail
 
 Following are the Validation Accuracy and Validation loss graphs generated: <br/>
 *   Validation and Training Accuracy v/s Epochs: <br/>
-![validation_accuracy_7](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S6/images/acc_7.png?raw=true)
+![validation_accuracy_7](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S7/acc_7.png?raw=true)
 
-*   Validation and Training Accuracy v/s Epochs: <br/>
-![validation_loss_7](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S6/images/val_loss_7.png?raw=true)
+*   Validation and Training Loss v/s Epochs: <br/>
+![validation_loss_7](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S7/val_loss_7.png?raw=true)
 
 
 Following are some of the images which were mis-classified by the model: <br/>
-![mis_classified_7](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S6/images/S7_misclassified_images.png?raw=true)
+![mis_classified_7](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S7/S7_misclassified_images.png?raw=true)

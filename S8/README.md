@@ -1,5 +1,5 @@
 # **Overview:**
-The objective was to train a Resnet18 model (default Resent code imported from [this](https://github.com/kuangliu/pytorch-cifar/blob/master/models/resnet.py "pytorch-cifar-resnet18") github repository has been used to keep the number of parameters fixed) for classifying the objects in the torchvision.CIFAR10 dataset.
+The objective was to train a ResNet18 model (default ResNet code imported from [this](https://github.com/kuangliu/pytorch-cifar/blob/master/models/resnet.py "pytorch-cifar-ResNet18") github repository has been used to keep the number of parameters fixed) for classifying the objects in the torchvision.CIFAR10 dataset.
 
 Our goal is to achieve 85% accuracy, with no limit on epochs (model reached a final validation accuracy of **91.57%**; it crossed **86.26%** test accuracy at **epoch 9**)
 
@@ -12,7 +12,7 @@ Following is the architecure of ResNet18 [[source](https://duchesnay.github.io/p
 *   No. of Parameters (same as in original ResNet18): **11,173,962**
 
 # **Files:**
-*   **resnet.py**     : The main resnet model file [[source](https://github.com/kuangliu/pytorch-cifar/blob/master/models/resnet.py "pytorch-cifar-resnet18")] which contains the ResNet18 class imported into the main S8.ipynb file while training/testing
+*   **resnet.py**     : The main ResNet model file [[source](https://github.com/kuangliu/pytorch-cifar/blob/master/models/resnet.py "pytorch-cifar-resnet18")] which contains the ResNet18 class imported into the main S8.ipynb file while training/testing
 *   **utilities.py**  : Functions for loading datasets, making train/test loaders, plotting images and loss/accuracy, getting mean and standard deviation of data, etc.
 *   **train_test.py** : Functions which can be called for training and testing the model.
 *   **config.py**     : Parameter presets, static variable values which are called throughout the code - required for running the various blocks in the main S8.ipynb file.

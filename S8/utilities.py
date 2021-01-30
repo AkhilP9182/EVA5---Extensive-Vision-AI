@@ -3,10 +3,9 @@ import torch
 import torchvision
 import torch.utils.data
 import matplotlib.pyplot as plt
-import S7.config as config
+import S8.config as config
 
-def train_loader_cifar10(trainset, shuffle=True, num_workers=2,
-                         mean = (0.5,0.5,0.5), std = (0.5,0.5,0.5)):
+def train_loader_cifar10(trainset, shuffle=True, num_workers=2):
     """
     Function for getting a trainloader iterator
     """
@@ -14,8 +13,7 @@ def train_loader_cifar10(trainset, shuffle=True, num_workers=2,
                                                     shuffle=shuffle, num_workers=config.num_workers)
     return trainloader
 
-def test_loader_cifar10(testset, shuffle=False, num_workers=2,
-                         mean = (0.5,0.5,0.5), std = (0.5,0.5,0.5)):
+def test_loader_cifar10(testset, shuffle=False, num_workers=2):
     """
     Function for getting a testloader iterator
     """

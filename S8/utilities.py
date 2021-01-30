@@ -4,7 +4,6 @@ import torchvision
 import torch.utils.data
 import matplotlib.pyplot as plt
 import S8.config as config
-from S8.resnet import ResNet18
 
 def train_loader_cifar10(trainset, shuffle=True, num_workers=2):
     """
@@ -93,7 +92,7 @@ def plot_loss(train_loss_vals,test_loss_vals,epochs):
 
     plt.show()
     my_dpi = 100
-    loss.savefig('S8/loss.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    loss.savefig('S8/S8_loss.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
 
 
 def plot_acc(train_acc_vals,test_acc_vals,epochs):
@@ -112,7 +111,7 @@ def plot_acc(train_acc_vals,test_acc_vals,epochs):
 
     plt.show()
     my_dpi = 100
-    acc.savefig('S8/accuracy.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    acc.savefig('S8/S8_accuracy.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
 
 def plot_misclassified(Net,MODEL_PATH,test_loader,
                         rows=5, cols=5, mean=(0,0,0), std=(1,1,1), classes=[0,0,0]):
@@ -128,7 +127,7 @@ def plot_misclassified(Net,MODEL_PATH,test_loader,
     device = config.DEVICE
 
     # MODEL_PATH = "S8/models/S8_best_resnet18_model.model"
-    model = ResNet18()
+    model = Net()
     model.load_state_dict(torch.load(MODEL_PATH))
     model = model.to(device)
     model.eval()
@@ -163,3 +162,53 @@ def plot_misclassified(Net,MODEL_PATH,test_loader,
     plt.show()
     my_dpi = 100
     fig.savefig('S8/S8_misclassified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    
+def plot_correct_classified(Net,MODEL_PATH,test_loader,
+                        rows=5, cols=5, mean=(0,0,0), std=(1,1,1), classes=[0,0,0]):
+    num_row     = 5
+    num_col     = 5
+    num_images  = num_row*num_col
+    batch_size_test = config.BATCH_SIZE_TEST
+
+    # Empty lists for storing the misclassified images, their corresponding predicitons and labels
+    correct_images = []
+    correct_labels = []
+    correct_pred   = []
+    device = config.DEVICE
+
+    # MODEL_PATH = "S8/models/S8_best_resnet18_model.model"
+    model = Net()
+    model.load_state_dict(torch.load(MODEL_PATH))
+    model = model.to(device)
+    model.eval()
+
+    with torch.no_grad():
+        for batch_idx, (data, target) in enumerate(test_loader):
+            images,labels  = data.to(device), target.to(device)
+            output         = model(images)
+            pred           = (output.argmax(dim=1, keepdim=True)).view_as(labels)
+            correct_classified = pred.eq(labels).tolist()
+            # 'mis_classified' is a Boolean list (size same as labels). 
+            # It is True where the prediction does not match label
+            if any(correct_classified) == True:
+                correct_images.extend(images[correct_classified].cpu())
+                correct_labels.extend(labels[correct_classified].cpu())
+                correct_pred.extend(pred[correct_classified].cpu())
+            
+            if len(correct_pred)>=num_images:
+                correct_images = correct_images[:25]
+                correct_labels = correct_labels[:25]
+                correct_pred = correct_pred[:25]
+                break
+
+    # Plot the digit images with label and predictions
+    fig, axes = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
+    for i in range(num_images):
+        ax = axes[i//num_col, i%num_col]
+        ax.imshow(correct_images[i].numpy().transpose((1,2,0))*std + mean)
+        ax.set_title('Label: {}\nPrediction: {}'.format(classes[correct_labels[i]],
+                                                        classes[correct_pred[i]]))
+
+    plt.show()
+    my_dpi = 100
+    fig.savefig('S8/S8_correct_classified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)

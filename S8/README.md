@@ -12,10 +12,10 @@ Following is the architecure of ResNet18 [[source](https://duchesnay.github.io/p
 *   No. of Parameters (same as in original ResNet18): **11,173,962**
 
 # **Files:**
-*   resnet.py     : The main resnet model file [[source](https://github.com/kuangliu/pytorch-cifar/blob/master/models/resnet.py "pytorch-cifar-resnet18")] which contains the ResNet18 class imported into the main S8.ipynb file while training/testing
-*   utilities.py  : Functions for loading datasets, making train/test loaders, plotting images and loss/accuracy, getting mean and standard deviation of data, etc.
-*   train_test.py : Functions which can be called for training and testing the model.
-*   config.py     : Parameter presets, static variable values which are called throughout the code - required for running the various blocks in the main S8.ipynb file.
+*   **resnet.py**     : The main resnet model file [[source](https://github.com/kuangliu/pytorch-cifar/blob/master/models/resnet.py "pytorch-cifar-resnet18")] which contains the ResNet18 class imported into the main S8.ipynb file while training/testing
+*   **utilities.py**  : Functions for loading datasets, making train/test loaders, plotting images and loss/accuracy, getting mean and standard deviation of data, etc.
+*   **train_test.py** : Functions which can be called for training and testing the model.
+*   **config.py**     : Parameter presets, static variable values which are called throughout the code - required for running the various blocks in the main S8.ipynb file.
 
 # **Plots:**
 Following are the Validation Accuracy and Validation loss graphs generated: <br/>
@@ -29,7 +29,7 @@ Following are the Validation Accuracy and Validation loss graphs generated: <br/
 *   Following are some of the images which were mis-classified by the model: <br/>
 ![S8_misclassified_images](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S8/images/S8_misclassified_images.png?raw=true)
 
-*   Following are some of the images which were mis-classified by the model: <br/>
+*   Following are some of the images which were correctly classified by the model: <br/>
 ![S8_correct_classified_images](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S8/images/S8_correct_classified_images.png?raw=true)
 
 # **References:**

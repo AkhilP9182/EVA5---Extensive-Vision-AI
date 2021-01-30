@@ -88,7 +88,7 @@ def plot_loss(train_loss_vals,test_loss_vals,epochs):
 
     plt.plot(x, y_train, color='b')
     plt.plot(x, y_test, color='r')
-    plt.legend(loc='best')
+    plt.legend(loc='upper right')
 
     plt.show()
     my_dpi = 100
@@ -107,7 +107,7 @@ def plot_acc(train_acc_vals,test_acc_vals,epochs):
 
     plt.plot(x, y_train, color='b')
     plt.plot(x, y_test, color='r')
-    plt.legend(loc='best')
+    plt.legend(loc='lower right')
 
     plt.show()
     my_dpi = 100

@@ -4,6 +4,7 @@ import torchvision
 import torch.utils.data
 import matplotlib.pyplot as plt
 import S8.config as config
+from S8.resnet import ResNet18
 
 def train_loader_cifar10(trainset, shuffle=True, num_workers=2):
     """
@@ -91,7 +92,7 @@ def plot_loss(train_loss_vals,test_loss_vals,epochs):
 
     plt.show()
     my_dpi = 100
-    loss.savefig('S7/loss.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    loss.savefig('S8/loss.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
 
 
 def plot_acc(train_acc_vals,test_acc_vals,epochs):
@@ -109,7 +110,7 @@ def plot_acc(train_acc_vals,test_acc_vals,epochs):
 
     plt.show()
     my_dpi = 100
-    acc.savefig('S7/accuracy.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    acc.savefig('S8/accuracy.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
 
 def plot_misclassified(Net,MODEL_PATH,test_loader,
                         rows=5, cols=5, mean=(0,0,0), std=(1,1,1), classes=[0,0,0]):
@@ -124,8 +125,8 @@ def plot_misclassified(Net,MODEL_PATH,test_loader,
     mis_pred   = []
     device = config.DEVICE
 
-    # MODEL_PATH = "S7/models/S7_best_model.model"
-    model = Net(BN_type='BN')
+    # MODEL_PATH = "S8/models/S8_best_resnet18_model.model"
+    model = ResNet18()
     model.load_state_dict(torch.load(MODEL_PATH))
     model = model.to(device)
     model.eval()
@@ -159,4 +160,4 @@ def plot_misclassified(Net,MODEL_PATH,test_loader,
 
     plt.show()
     my_dpi = 100
-    fig.savefig('S7/S7_misclassified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    fig.savefig('S8/S8_misclassified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)

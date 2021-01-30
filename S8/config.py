@@ -26,4 +26,4 @@ train_transform  = transforms.Compose([transforms.RandomHorizontalFlip(p=0.3)
                                        ,transforms.Normalize((0.49186122, 0.48266134, 0.44720834), (0.24699295, 0.24340236, 0.26160896))])
 
 test_transform = transforms.Compose([transforms.ToTensor()
-                                     ,transforms.Normalize((0.49186122, 0.48266134, 0.44720834), (0.24699295, 0.24340236, 0.26160896))
+                                     ,transforms.Normalize((0.49186122, 0.48266134, 0.44720834), (0.24699295, 0.24340236, 0.26160896))])

@@ -86,9 +86,9 @@ def plot_loss(train_loss_vals,test_loss_vals,epochs):
     plt.xlabel("Epochs")
     plt.ylabel("Validation Loss")
 
-    train = plt.plot(x, y_train, color='b', label='Training')
-    val   = plt.plot(x, y_test, color='r', label='Validation')
-    plt.legend([train,val])
+    plt.plot(x, y_train, color='b',label="Training")
+    plt.plot(x, y_test, color='r',label="Validation")
+    plt.legend(loc ="upper right")
 
     plt.show()
     my_dpi = 100
@@ -105,9 +105,9 @@ def plot_acc(train_acc_vals,test_acc_vals,epochs):
     plt.xlabel("Epochs")
     plt.ylabel("Validation Accuracy")
 
-    train = plt.plot(x, y_train, color='b', label='Training')
-    val   = plt.plot(x, y_test, color='r', label='Validation')
-    plt.legend([train,val])
+    plt.plot(x, y_train, color='b',label="Training")
+    plt.plot(x, y_test, color='r',label="Validation")
+    plt.legend(loc ="lower right")
 
     plt.show()
     my_dpi = 100

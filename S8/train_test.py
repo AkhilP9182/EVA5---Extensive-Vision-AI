@@ -40,8 +40,7 @@ def train(model, device, train_loader, optimizer, epoch,L1_param=0,L2_param=0):
     model.eval() 
     total_train_loss = 0
     correct_train    = 0
-    criterion = nn.CrossEntropyLoss()
-    # torch.no_grad() disables gradient calculation during inference, thus reducing memory consumption 
+
     with torch.no_grad():
         for data, target in train_loader:
             data, target   = data.to(device), target.to(device)

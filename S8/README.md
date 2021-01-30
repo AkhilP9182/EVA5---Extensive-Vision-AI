@@ -4,7 +4,9 @@ The objective was to train a Resnet18 model (default Resent code imported from [
 Our goal is to achieve 85% accuracy, with no limit on epochs (model reached **%** accuracy, crossed 85.78% test accuracy at epoch 7)
 
 Following is the architecure of ResNet18 [source](https://duchesnay.github.io/pystatsml/_images/resnet18.png "cifar-resnet18"):
-![resnet18_architecture.png](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S8/resnet18_architecture.png?raw=true)
+<p align="center">
+  <img src="https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S8/images/resnet18_architecture.png?raw=true">
+</p>
 
 *   No. of Parameters (original ResNet18): **11,173,962**
 

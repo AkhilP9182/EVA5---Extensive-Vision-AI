@@ -40,12 +40,12 @@ def train(model, device, train_loader, optimizer, epoch,L1_param=0,L2_param=0):
     model.eval() 
     total_train_loss = 0
     correct_train    = 0
-
+    criterion = nn.CrossEntropyLoss(reduction='sum')
     with torch.no_grad():
         for data, target in train_loader:
             data, target   = data.to(device), target.to(device)
             output         = model(data)
-            total_train_loss += criterion(output, target, reduction='sum').item()     # sums up the loss for all samples in a batch               
+            total_train_loss += criterion(output, target).item()     # sums up the loss for all samples in a batch               
             pred           = output.argmax(dim=1, keepdim=True)                      # get the index of the max log-probability
             correct_train += pred.eq(target.view_as(pred)).sum().item()              # Compare the predictions with the target
     
@@ -60,13 +60,13 @@ def test(model, device, test_loader):
     model.eval()
     total_test_loss = 0
     correct_test    = 0
-    criterion = nn.CrossEntropyLoss()
+    criterion = nn.CrossEntropyLoss(reduction='sum')
     # torch.no_grad() disables gradient calculation during inference, thus reducing memory consumption
     with torch.no_grad():
         for data, target in test_loader:
             data, target = data.to(device), target.to(device)
             output       = model(data)
-            total_test_loss += criterion(output, target,reduction='sum').item()     # sums up the loss for all samples in a batch  
+            total_test_loss += criterion(output, target).item()     # sums up the loss for all samples in a batch  
             pred         = output.argmax(dim=1, keepdim=True)                      # get the index of the max log-probability
             correct_test+= pred.eq(target.view_as(pred)).sum().item()              # Compare the predictions with the target
 

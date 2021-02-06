@@ -1,15 +1,63 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import torch
 import torchvision
-import torch.utils.data
-import matplotlib.pyplot as plt
+import albumentations as A
+import torchvision.transforms as transforms
+from PIL import Image
+from torch.utils.data import DataLoader, Dataset
 import S9.config as config
 
+to_tensor = transforms.Compose([transforms.ToTensor()])
+
+class AlbumentateTrainData(Dataset):
+    def __init__(self, image_list, labels, mean=(0, 0, 0), std=(1,1,1)):
+        self.image_list = image_list
+        self.labels     = labels
+        self.transforms = A.Compose([
+            A.HorizontalFlip(p=0.5),
+            A.VerticalFlip(p=0.5),
+            A.Rotate((-9.0, 9.0), p=0.5),
+            A.RandomBrightnessContrast(brightness_limit=0.05, contrast_limit=0.05, p=0.5),
+            A.Cutout(num_holes=4, max_h_size=8, max_w_size=8, fill_value=[mean[0], mean[1], mean[2]], p=0.5),
+            A.Normalize(mean, std)
+        ])
+
+    def __len__(self):
+        return (len(self.image_list))
+
+    def __getitem__(self, i):
+        image = Image.fromarray(self.image_list[i]).convert('RGB')
+        image = self.transforms(image=np.array(image))['image']
+        image = np.transpose(image, (2, 0, 1)).astype(np.float32)
+        image = torch.tensor(image, dtype=torch.float)
+        label = self.labels[i]
+        label = torch.tensor(label, dtype=torch.long)
+        return image, label
+    
+class AlbumentateTestData(Dataset):
+    def __init__(self, image_list, labels, mean=(0, 0, 0), std=(1,1,1)):
+        self.image_list = image_list
+        self.labels     = labels
+        self.transforms = A.Compose([A.Normalize(mean, std),])
+
+    def __len__(self):
+        return (len(self.image_list))
+
+    def __getitem__(self, i):
+        image = Image.fromarray(self.image_list[i]).convert('RGB')
+        image = self.transforms(image=np.array(image))['image']
+        image = np.transpose(image, (2, 0, 1)).astype(np.float32)
+        image = torch.tensor(image, dtype=torch.float)
+        label = self.labels[i]
+        label = torch.tensor(label, dtype=torch.long)
+        return image, label
+    
 def train_loader_cifar10(trainset, shuffle=True, num_workers=2):
     """
     Function for getting a trainloader iterator
     """
-    trainloader      = torch.utils.data.DataLoader(trainset, batch_size = config.BATCH_SIZE_TRAIN,
+    trainloader      = DataLoader(trainset, batch_size = config.BATCH_SIZE_TRAIN,
                                                     shuffle=shuffle, num_workers=config.num_workers)
     return trainloader
 
@@ -18,7 +66,7 @@ def test_loader_cifar10(testset, shuffle=False, num_workers=2):
     Function for getting a testloader iterator
     """
 
-    testloader     = torch.utils.data.DataLoader(testset, batch_size = config.BATCH_SIZE_TEST,
+    testloader     = DataLoader(testset, batch_size = config.BATCH_SIZE_TEST,
                                                 shuffle=shuffle, num_workers=config.num_workers)
 
     return testloader
@@ -27,8 +75,8 @@ def get_mean_std_overall(trainset,testset):
     """
     Function for getting the mean and standard devitation of dataset (train and test combined)
     """
-    train_loader = torch.utils.data.DataLoader(trainset, batch_size = 1024, shuffle=False, num_workers=1)
-    test_loader  = torch.utils.data.DataLoader(testset, batch_size = 1024, shuffle=False, num_workers=1)
+    train_loader = DataLoader(trainset, batch_size = 1024, shuffle=False, num_workers=1)
+    test_loader  = DataLoader(testset, batch_size = 1024, shuffle=False, num_workers=1)
     channel_sum, channel_squared_sum, num_batches = 0,0,0
 
     for data, _ in train_loader:
@@ -92,7 +140,7 @@ def plot_loss(train_loss_vals,test_loss_vals,epochs):
 
     plt.show()
     my_dpi = 100
-    loss.savefig('S8/S8_loss.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    loss.savefig('S9/S9_loss.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
 
 
 def plot_acc(train_acc_vals,test_acc_vals,epochs):
@@ -111,7 +159,7 @@ def plot_acc(train_acc_vals,test_acc_vals,epochs):
 
     plt.show()
     my_dpi = 100
-    acc.savefig('S8/S8_accuracy.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    acc.savefig('S9/S9_accuracy.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
 
 def plot_misclassified(Net,MODEL_PATH,test_loader,
                         rows=5, cols=5, mean=(0,0,0), std=(1,1,1), classes=[0,0,0]):
@@ -161,7 +209,7 @@ def plot_misclassified(Net,MODEL_PATH,test_loader,
 
     plt.show()
     my_dpi = 100
-    fig.savefig('S8/S8_misclassified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    fig.savefig('S9/S9_misclassified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
     
 def plot_correct_classified(Net,MODEL_PATH,test_loader,
                         rows=5, cols=5, mean=(0,0,0), std=(1,1,1), classes=[0,0,0]):
@@ -176,7 +224,7 @@ def plot_correct_classified(Net,MODEL_PATH,test_loader,
     correct_pred   = []
     device = config.DEVICE
 
-    # MODEL_PATH = "S8/models/S8_best_resnet18_model.model"
+    # MODEL_PATH = "S9/models/S9_best_resnet18_model.model"
     model = Net()
     model.load_state_dict(torch.load(MODEL_PATH))
     model = model.to(device)
@@ -211,4 +259,4 @@ def plot_correct_classified(Net,MODEL_PATH,test_loader,
 
     plt.show()
     my_dpi = 100
-    fig.savefig('S8/S8_correct_classified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    fig.savefig('S9/S9_correct_classified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)

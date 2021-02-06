@@ -18,10 +18,9 @@ class AlbumentateTrainData(Dataset):
         self.std        = std
         self.transforms = A.Compose([
             A.HorizontalFlip(p=0.5),
-            A.VerticalFlip(p=0.5),
-            A.Rotate((-9.0, 9.0), p=0.5),
+            A.Rotate((-8.0, 8.0), p=0.5),
             A.RandomBrightnessContrast(brightness_limit=0.05, contrast_limit=0.05, p=0.5),
-            A.Cutout(num_holes=4, max_h_size=8, max_w_size=8, fill_value=[self.mean[0], self.mean[1], self.mean[2]], p=0.5),
+            A.Cutout(num_holes=8, max_h_size=8, max_w_size=8, fill_value=self.mean, p=0.5),
             A.Normalize(self.mean, self.std)
         ])
 
@@ -42,7 +41,7 @@ class AlbumentateTestData(Dataset):
         self.labels     = labels
         self.mean       = mean
         self.std        = std
-        self.transforms = A.Compose([A.Normalize(self.mean, self.std),])
+        self.transforms = A.Compose([A.Normalize(self.mean, self.std)])
 
     def __len__(self):
         return (len(self.image_list))

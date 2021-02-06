@@ -20,7 +20,7 @@ class AlbumentateTrainData(Dataset):
             A.HorizontalFlip(p=0.5),
             A.Rotate((-8.0, 8.0), p=0.5),
             A.RandomBrightnessContrast(brightness_limit=0.05, contrast_limit=0.05, p=0.5),
-            A.Cutout(num_holes=8, max_h_size=8, max_w_size=8, fill_value=self.mean, p=0.5),
+            A.Cutout(num_holes=2, max_h_size=12, max_w_size=12, fill_value=self.mean, p=0.5),
             A.Normalize(self.mean, self.std)
         ])
 
@@ -28,7 +28,8 @@ class AlbumentateTrainData(Dataset):
         return (len(self.image_list))
 
     def __getitem__(self, i):
-        image = self.transforms(image=np.array(self.image_list[i]))['image']
+        image = self.image_list[i].convert('RGB')
+        image = self.transforms(image=np.array(image))['image']
         image = np.transpose(image, (2, 0, 1)).astype(np.float32)
         image = torch.tensor(image, dtype=torch.float)
         label = self.labels[i]
@@ -47,7 +48,8 @@ class AlbumentateTestData(Dataset):
         return (len(self.image_list))
 
     def __getitem__(self, i):
-        image = self.transforms(image=np.array(self.image_list[i]))['image']
+        image = self.image_list[i].convert('RGB')
+        image = self.transforms(image=np.array(image))['image']
         image = np.transpose(image, (2, 0, 1)).astype(np.float32)
         image = torch.tensor(image, dtype=torch.float)
         label = self.labels[i]

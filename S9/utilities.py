@@ -88,6 +88,28 @@ def get_PIL_images(dataset):
     std  = img_array.std(axis=(0,1,2))
     return images, labels, mean, std
 
+def get_mean_std_overall(trainset,testset):
+    """
+    Function for getting the mean and standard devitation of dataset (train and test combined)
+    """
+    train_loader = torch.utils.data.DataLoader(trainset, batch_size = 1024, shuffle=False, num_workers=1)
+    test_loader  = torch.utils.data.DataLoader(testset, batch_size = 1024, shuffle=False, num_workers=1)
+    channel_sum, channel_squared_sum, num_batches = 0,0,0
+
+    for data, _ in train_loader:
+        channel_sum += torch.mean(data, dim=[0,2,3])
+        channel_squared_sum += torch.mean(data**2, dim=[0,2,3])
+        num_batches += 1
+
+    for data, _ in test_loader:
+        channel_sum += torch.mean(data, dim=[0,2,3])
+        channel_squared_sum += torch.mean(data**2, dim=[0,2,3])
+        num_batches += 1
+
+    mean = (channel_sum/num_batches)
+    std  = ((channel_squared_sum/num_batches) - mean**2)**0.5
+    return mean,std
+
 def dataset_info(train_set,test_set):
     """
         The following 7 lines are to assert whether both training and test sets have the same number/type of 

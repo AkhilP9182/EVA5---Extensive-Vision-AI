@@ -29,7 +29,7 @@ class AlbumentateTrainData(Dataset):
         return (len(self.image_list))
 
     def __getitem__(self, i):
-        image = self.transforms(image=np.array(image))['image']
+        image = self.transforms(image=np.array(self.image_list[i]))['image']
         image = np.transpose(image, (2, 0, 1)).astype(np.float32)
         image = torch.tensor(image, dtype=torch.float)
         label = self.labels[i]
@@ -48,7 +48,7 @@ class AlbumentateTestData(Dataset):
         return (len(self.image_list))
 
     def __getitem__(self, i):
-        image = self.transforms(image=np.array(image))['image']
+        image = self.transforms(image=np.array(self.image_list[i]))['image']
         image = np.transpose(image, (2, 0, 1)).astype(np.float32)
         image = torch.tensor(image, dtype=torch.float)
         label = self.labels[i]

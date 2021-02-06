@@ -14,13 +14,15 @@ class AlbumentateTrainData(Dataset):
     def __init__(self, image_list, labels, mean=(0, 0, 0), std=(1,1,1)):
         self.image_list = image_list
         self.labels     = labels
+        self.mean       = mean
+        self.std        = std
         self.transforms = A.Compose([
             A.HorizontalFlip(p=0.5),
             A.VerticalFlip(p=0.5),
             A.Rotate((-9.0, 9.0), p=0.5),
             A.RandomBrightnessContrast(brightness_limit=0.05, contrast_limit=0.05, p=0.5),
-            A.Cutout(num_holes=4, max_h_size=8, max_w_size=8, fill_value=[mean[0], mean[1], mean[2]], p=0.5),
-            A.Normalize(mean, std)
+            A.Cutout(num_holes=4, max_h_size=8, max_w_size=8, fill_value=[self.mean[0], self.mean[1], self.mean[2]], p=0.5),
+            A.Normalize(self.mean, self.std)
         ])
 
     def __len__(self):
@@ -39,7 +41,9 @@ class AlbumentateTestData(Dataset):
     def __init__(self, image_list, labels, mean=(0, 0, 0), std=(1,1,1)):
         self.image_list = image_list
         self.labels     = labels
-        self.transforms = A.Compose([A.Normalize(mean, std),])
+        self.mean       = mean
+        self.std        = std
+        self.transforms = A.Compose([A.Normalize(self.mean, self.std),])
 
     def __len__(self):
         return (len(self.image_list))

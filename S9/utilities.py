@@ -73,27 +73,20 @@ def test_loader_cifar10(testset, shuffle=False, num_workers=2):
 
     return testloader
 
-def get_mean_std_overall(trainset,testset):
+def get_PIL_images(dataset):
     """
-    Function for getting the mean and standard devitation of dataset (train and test combined)
+    Function for getting list of PIL images from the loaded torchvision dataset, their labels and their corresponding mean and std deviation
     """
-    train_loader = DataLoader(trainset, batch_size = 1024, shuffle=False, num_workers=1)
-    test_loader  = DataLoader(testset, batch_size = 1024, shuffle=False, num_workers=1)
-    channel_sum, channel_squared_sum, num_batches = 0,0,0
-
-    for data, _ in train_loader:
-        channel_sum += torch.mean(data, dim=[0,2,3])
-        channel_squared_sum += torch.mean(data**2, dim=[0,2,3])
-        num_batches += 1
-
-    for data, _ in test_loader:
-        channel_sum += torch.mean(data, dim=[0,2,3])
-        channel_squared_sum += torch.mean(data**2, dim=[0,2,3])
-        num_batches += 1
-
-    mean = (channel_sum/num_batches)
-    std  = ((channel_squared_sum/num_batches) - mean**2)**0.5
-    return mean,std
+    images = [dataset[i][0] for i in range(0,len(dataset))]
+    labels = [dataset[i][1] for i in range(0,len(dataset))]
+    
+    img_array = []
+    for i in range(0,len(images)):
+        img_array.append(np.asarray(images[i]))
+    img_array = np.array((img_array))
+    mean = img_array.mean(axis=(0,1,2))
+    std  = img_array.std(axis=(0,1,2))
+    return images, labels, mean, std
 
 def dataset_info(train_set,test_set):
     """

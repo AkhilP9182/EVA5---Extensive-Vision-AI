@@ -16,7 +16,7 @@ ___
 # **Albumentations used:**
 *   Random HorizontalFlip
 *   RandomRotate
-*   RandomRandomBrightnessContrast
+*   RandomBrightnessContrast
 *   Cutout
 *   Normalize
 

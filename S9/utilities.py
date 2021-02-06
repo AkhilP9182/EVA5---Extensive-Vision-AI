@@ -7,6 +7,8 @@ import torchvision.transforms as transforms
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset
 import S9.config as config
+from S9.gradcam import GradCam
+from S9.gradcam import show_cam_on_image
 
 to_tensor = transforms.Compose([transforms.ToTensor()])
 
@@ -190,9 +192,9 @@ def plot_misclassified(Net,MODEL_PATH,test_loader,
     mis_images = []
     mis_labels = []
     mis_pred   = []
+    mis_gradcam = []
     device = config.DEVICE
 
-    # MODEL_PATH = "S8/models/S8_best_resnet18_model.model"
     model = Net()
     model.load_state_dict(torch.load(MODEL_PATH))
     model = model.to(device)
@@ -216,18 +218,32 @@ def plot_misclassified(Net,MODEL_PATH,test_loader,
                 mis_labels = mis_labels[:25]
                 mis_pred = mis_pred[:25]
                 break
+                
+    for img in mis_images:
+        mask = grad_cam(img)
+        op_img = show_cam_on_image(img.squeeze().permute(1,2,0), mask)
+        mis_gradcam.append(op_img)
 
     # Plot the digit images with label and predictions
-    fig, axes = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
+    fig1, axes1 = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
     for i in range(num_images):
-        ax = axes[i//num_col, i%num_col]
+        ax = axes1[i//num_col, i%num_col]
         ax.imshow(mis_images[i].numpy().transpose((1,2,0))*std + mean)
+        ax.set_title('Label: {}\nPrediction: {}'.format(classes[mis_labels[i]],
+                                                        classes[mis_pred[i]]))
+    plt.show()
+        
+    fig2, axes2 = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
+    for i in range(num_images):
+        ax = axes2[i//num_col, i%num_col]
+        ax.imshow(mis_gradcam[i].numpy().transpose((1,2,0))*std + mean)
         ax.set_title('Label: {}\nPrediction: {}'.format(classes[mis_labels[i]],
                                                         classes[mis_pred[i]]))
 
     plt.show()
     my_dpi = 100
-    fig.savefig('S9/S9_misclassified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    fig1.savefig('S9/S9_misclassified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    fig2.savefig('S9/S9_misclassified_gradcam.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
     
 def plot_correct_classified(Net,MODEL_PATH,test_loader,
                         rows=5, cols=5, mean=(0,0,0), std=(1,1,1), classes=[0,0,0]):
@@ -240,13 +256,14 @@ def plot_correct_classified(Net,MODEL_PATH,test_loader,
     correct_images = []
     correct_labels = []
     correct_pred   = []
+    correct_gradcam = []
     device = config.DEVICE
 
-    # MODEL_PATH = "S9/models/S9_best_resnet18_model.model"
     model = Net()
     model.load_state_dict(torch.load(MODEL_PATH))
     model = model.to(device)
     model.eval()
+    grad_cam = GradCam(model=model, feature_module=model.layer3, target_layer_names=["1"], use_cuda=config.USE_CUDA)
 
     with torch.no_grad():
         for batch_idx, (data, target) in enumerate(test_loader):
@@ -266,15 +283,31 @@ def plot_correct_classified(Net,MODEL_PATH,test_loader,
                 correct_labels = correct_labels[:25]
                 correct_pred = correct_pred[:25]
                 break
-
+                
+    for img in correct_images:
+        mask = grad_cam(img)
+        op_img = show_cam_on_image(img.squeeze().permute(1,2,0), mask)
+        correct_gradcam.append(op_img)
+       
     # Plot the digit images with label and predictions
-    fig, axes = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
+    fig1, axes1 = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
     for i in range(num_images):
-        ax = axes[i//num_col, i%num_col]
+        ax = axes1[i//num_col, i%num_col]
         ax.imshow(correct_images[i].numpy().transpose((1,2,0))*std + mean)
         ax.set_title('Label: {}\nPrediction: {}'.format(classes[correct_labels[i]],
                                                         classes[correct_pred[i]]))
+    plt.show()
+
+        
+    fig2, axes2 = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
+    for i in range(num_images):
+        ax = axes2[i//num_col, i%num_col]
+        ax.imshow(correct_gradcam[i].numpy().transpose((1,2,0))*std + mean)
+        ax.set_title('Label: {}\nPrediction: {}'.format(classes[correct_labels[i]],
+                                                        classes[correct_pred[i]]))
+    plt.show()
 
     plt.show()
     my_dpi = 100
-    fig.savefig('S9/S9_correct_classified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    fig1.savefig('S9/S9_correct_classified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    fig2.savefig('S9/S9_correct_classified_gradcam.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)

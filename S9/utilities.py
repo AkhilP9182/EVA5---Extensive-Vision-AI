@@ -3,7 +3,7 @@ import torch
 import torchvision
 import torch.utils.data
 import matplotlib.pyplot as plt
-import S8.config as config
+import S9.config as config
 
 def train_loader_cifar10(trainset, shuffle=True, num_workers=2):
     """

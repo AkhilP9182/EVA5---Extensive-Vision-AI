@@ -7,8 +7,8 @@ import torchvision.transforms as transforms
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset
 import S9.config as config
-from S9.gradcam import GradCam
-from S9.gradcam import show_cam_on_image
+from gradcam.utils import visualize_cam
+from gradcam import GradCAM, GradCAMpp
 
 to_tensor = transforms.Compose([transforms.ToTensor()])
 
@@ -199,6 +199,7 @@ def plot_misclassified(Net,MODEL_PATH,test_loader,
     model.load_state_dict(torch.load(MODEL_PATH))
     model = model.to(device)
     model.eval()
+    gradcam = GradCAM(model,model.layer3)
 
     with torch.no_grad():
         for batch_idx, (data, target) in enumerate(test_loader):
@@ -220,11 +221,12 @@ def plot_misclassified(Net,MODEL_PATH,test_loader,
                 break
                 
     for img in mis_images:
-        mask = grad_cam(img)
-        op_img = show_cam_on_image(img.squeeze().permute(1,2,0), mask)
-        mis_gradcam.append(op_img)
+        mask, _         = gradcam(img.unsqueeze(0).to(device))
+        heatmap, result = visualize_cam(mask, img)
+        mis_gradcam.append(result)
 
     # Plot the digit images with label and predictions
+    print("Following are the mis-classified images:-")
     fig1, axes1 = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
     for i in range(num_images):
         ax = axes1[i//num_col, i%num_col]
@@ -232,7 +234,8 @@ def plot_misclassified(Net,MODEL_PATH,test_loader,
         ax.set_title('Label: {}\nPrediction: {}'.format(classes[mis_labels[i]],
                                                         classes[mis_pred[i]]))
     plt.show()
-        
+    
+    print("Following are the GradCam Heatmaps for those mis-classified images:-")
     fig2, axes2 = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
     for i in range(num_images):
         ax = axes2[i//num_col, i%num_col]
@@ -263,7 +266,7 @@ def plot_correct_classified(Net,MODEL_PATH,test_loader,
     model.load_state_dict(torch.load(MODEL_PATH))
     model = model.to(device)
     model.eval()
-    grad_cam = GradCam(model=model, feature_module=model.layer3, target_layer_names=["1"], use_cuda=config.USE_CUDA)
+    gradcam = GradCAM(model,model.layer3)
 
     with torch.no_grad():
         for batch_idx, (data, target) in enumerate(test_loader):
@@ -285,10 +288,11 @@ def plot_correct_classified(Net,MODEL_PATH,test_loader,
                 break
                 
     for img in correct_images:
-        mask = grad_cam(img)
-        op_img = show_cam_on_image(img.squeeze().permute(1,2,0), mask)
-        correct_gradcam.append(op_img)
-       
+        mask, _         = gradcam(img.unsqueeze(0).to(device))
+        heatmap, result = visualize_cam(mask, img)
+        correct_gradcam.append(result)
+    
+    print("Following are the correctly classified images:-")
     # Plot the digit images with label and predictions
     fig1, axes1 = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
     for i in range(num_images):
@@ -298,7 +302,7 @@ def plot_correct_classified(Net,MODEL_PATH,test_loader,
                                                         classes[correct_pred[i]]))
     plt.show()
 
-        
+    print("Following are the GradCam Heatmaps for those correctly classified images:-")
     fig2, axes2 = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
     for i in range(num_images):
         ax = axes2[i//num_col, i%num_col]

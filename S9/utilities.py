@@ -199,7 +199,7 @@ def plot_misclassified(Net,MODEL_PATH,test_loader,
     model.load_state_dict(torch.load(MODEL_PATH))
     model = model.to(device)
     model.eval()
-    gradcam = GradCAM(model,model.layer3)
+    gradcam = GradCAM(model,model.layer4)
 
     with torch.no_grad():
         for batch_idx, (data, target) in enumerate(test_loader):
@@ -266,7 +266,7 @@ def plot_correct_classified(Net,MODEL_PATH,test_loader,
     model.load_state_dict(torch.load(MODEL_PATH))
     model = model.to(device)
     model.eval()
-    gradcam = GradCAM(model,model.layer3)
+    gradcam = GradCAM(model,model.layer4)
 
     with torch.no_grad():
         for batch_idx, (data, target) in enumerate(test_loader):

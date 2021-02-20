@@ -37,6 +37,9 @@ ___
 
 # **References:**
 [1] albumentations: https://github.com/albumentations-team/albumentations
+
 [2] resent18:  https://github.com/kuangliu/pytorch-cifar
+
 [3] GradCAM: https://github.com/vickyliin/gradcam_plus_plus-pytorch
+
 [3] LRFinder: https://github.com/davidtvs/pytorch-lr-finder

@@ -14,6 +14,15 @@ ___
 *   **lr_finder.py**     : The .py file which contains the LRfinder class. [[source](https://github.com/davidtvs/pytorch-lr-finder/blob/master/torch_lr_finder/lr_finder.py "lr_finder.py")]
 ___
 
+# **LR finder:**
+*   The lr_finder.range_test() function is a a function for obtaining the most optimal learning rate for a given loss criterion, optimization method and model. 
+*   During a pre-training run, the learning rate is exponentially increased between two boundaries (here, from `1e-7` to `1.0`). 
+*   The low initial learning rate allows the network to start converging and as the learning rate is increased, it would eventually become large enough upon when the network diverges.
+*   Usually, a good static learning rate can be found **half-way on the descending loss curve**. In the plot below that would be between lr=`1E10-4` and lr=`1E10-2` (which is also the range within which we got our suggested lr=`2.12E-03`)
+
+![S10_LR_finder](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S10/images/LRFinder.png?raw=true)
+___
+
 # **Plots:**
 Following are the Validation Accuracy and Validation loss graphs generated: <br/>
 *   Validation and Training Accuracy v/s Epochs: <br/>

@@ -1,7 +1,8 @@
 # **Overview:**
-The objective is to implement the LR finder function (from [this](https://github.com/davidtvs/pytorch-lr-finder/blob/master/torch_lr_finder/lr_finder.py "lr_finder.py") repository) for training a ResNet18 Deep Learning model on CIFAR10 dataset using (mini-batch) stochastic gradient descent.
+The objective is to implement the LR finder function (from [this](https://github.com/davidtvs/pytorch-lr-finder/blob/master/torch_lr_finder/lr_finder.py "lr_finder.py") repository) for fetching the Learning rate that would give us the fastest loss reduction for training a ResNet18 Deep Learning model on CIFAR10 dataset using (mini-batch) stochastic gradient descent.
 
-Our goal is to achieve **88%** accuracy within 50 epochs (model reached a final highest validation accuracy of **%**; it crossed **%** validation accuracy at **epoch **). <br/>
+Our goal is to achieve **88%** accuracy within 50 epochs (model reached a final highest validation accuracy of **%**; it crossed **%** validation accuracy at **epoch **).<br/>
+
 No. of Parameters (same as in original ResNet18 Model): **11,173,962**
 ___
 
@@ -42,4 +43,4 @@ ___
 
 [3] GradCAM: https://github.com/vickyliin/gradcam_plus_plus-pytorch
 
-[3] LRFinder: https://github.com/davidtvs/pytorch-lr-finder
+[4] LRFinder: https://github.com/davidtvs/pytorch-lr-finder

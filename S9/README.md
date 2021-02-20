@@ -9,7 +9,7 @@ ___
 *   **resnet.py**     : The main ResNet model file [[source](https://github.com/kuangliu/pytorch-cifar/blob/master/models/resnet.py "pytorch-cifar-resnet18")] which contains the ResNet18 class imported into the main S9.ipynb file while training/testing
 *   **utilities.py**  : Functions for loading datasets (and creating Albumentation transformation), making train/test loaders, plotting images (dataset images along with GradCAM heatmaps) and loss/accuracy, getting mean and standard deviation of data, etc.
 *   **train_test.py** : Functions which can be called for training and testing the model.
-*   **config.py**     : Parameter presets, static variable values which are called throughout the code - required for running the various blocks in the main S8.ipynb file.
+*   **config.py**     : Parameter presets, static variable values which are called throughout the code - required for running the various blocks in the main S9.ipynb file.
 
 ___
 

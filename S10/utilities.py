@@ -160,7 +160,7 @@ def plot_loss(train_loss_vals,test_loss_vals,epochs):
 
     plt.show()
     my_dpi = 100
-    loss.savefig('S9/images/S9_loss.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    loss.savefig('S10/images/S10_loss.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
 
 
 def plot_acc(train_acc_vals,test_acc_vals,epochs):
@@ -179,7 +179,7 @@ def plot_acc(train_acc_vals,test_acc_vals,epochs):
 
     plt.show()
     my_dpi = 100
-    acc.savefig('S9/images/S9_accuracy.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    acc.savefig('S10/images/S10_accuracy.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
 
 def plot_misclassified(Net,MODEL_PATH,test_loader,
                         rows=5, cols=5, mean=(0,0,0), std=(1,1,1), classes=[0,0,0]):
@@ -245,8 +245,8 @@ def plot_misclassified(Net,MODEL_PATH,test_loader,
 
     plt.show()
     my_dpi = 100
-    fig1.savefig('S9/images/S9_misclassified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
-    fig2.savefig('S9/images/S9_misclassified_gradcam.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    fig1.savefig('S10/images/S10_misclassified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    fig2.savefig('S10/images/S10_misclassified_gradcam.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
     
 def plot_correct_classified(Net,MODEL_PATH,test_loader,
                         rows=5, cols=5, mean=(0,0,0), std=(1,1,1), classes=[0,0,0]):
@@ -313,5 +313,5 @@ def plot_correct_classified(Net,MODEL_PATH,test_loader,
 
     plt.show()
     my_dpi = 100
-    fig1.savefig('S9/images/S9_correct_classified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
-    fig2.savefig('S9/images/S9_correct_classified_gradcam.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    fig1.savefig('S10/images/S10_correct_classified_images.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    fig2.savefig('S10/images/S10_correct_classified_gradcam.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)

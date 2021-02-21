@@ -1,7 +1,7 @@
 # **Overview:**
 The objective is to implement the LR finder function (from [this](https://github.com/davidtvs/pytorch-lr-finder/blob/master/torch_lr_finder/lr_finder.py "lr_finder.py") repository) for fetching the Learning rate that would give us the fastest loss reduction for training a ResNet18 Deep Learning model on CIFAR10 dataset using (mini-batch) stochastic gradient descent.
 
-Our goal is to achieve **88%** accuracy within 50 epochs (model reached a final highest validation accuracy of **%**; it crossed **%** validation accuracy at **epoch **).<br/>
+Our goal is to achieve **88%** accuracy within 50 epochs (model reached a final highest validation accuracy of **91.34%**; it crossed **88%** validation accuracy at **epoch 28**).<br/>
 
 No. of Parameters (same as in original ResNet18 Model): **11,173,962**
 ___
@@ -24,7 +24,7 @@ ___
 ___
 
 # **Plots:**
-Following are the Validation Accuracy and Validation loss graphs generated: <br/>
+Following are the Validation Accuracy and Validation loss graphs generated (the training loss curve diverges from the test loss curve after a while, and it reaches almost 100%, indiciating an overfit. This could be reduced by increasing the L2 Regularization parameter while training): <br/>
 *   Validation and Training Accuracy v/s Epochs: <br/>
 ![S10_accuracy](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S10/images/S10_accuracy.png?raw=true)
 

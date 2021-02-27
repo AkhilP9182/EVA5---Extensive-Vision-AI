@@ -43,5 +43,5 @@ def Cyclic_LR_Plot(lr_min, lr_max, total_iterations, stepsize):
     ax.text(0.7*stepsize,(lr_min + (lr_max+lr_min)*0.74), cycle_str, fontsize=12,
         bbox={'facecolor': 'blue', 'alpha': 0.1, 'pad': 1})
     my_dpi = 100
-    fig.savefig('S11/images/cyclicLRschedule.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
+    fig.savefig('S11/images/S11_cyclicLRschedule.png',figsize=(800/my_dpi, 800/my_dpi), dpi=my_dpi)
     

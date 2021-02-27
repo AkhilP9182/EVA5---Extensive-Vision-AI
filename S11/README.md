@@ -4,7 +4,7 @@ The objective is to implement the OneCycleLR scheduler to gradually update the l
 Below is an image of how learning rate changes in a cyclic LR updater schedule: <br/>
 ![S11_cyclicLRschedule.png](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S11/images/S11_cyclicLRschedule.png?raw=true)
 
-We will be using the OneCycleLR() function from the torch.optim.lr_scheduler() class to obtain an LR scheduler which reaches its peak at the 5th epoch. Our goal is to achieve **90%** accuracy within **ONLY 24 epochs** where the learning rate reaches its max at epoch 5 (model reached a final highest validation accuracy of **91.34%**; it crossed **88%** validation accuracy at **epoch 28**).<br/>
+We will be using the OneCycleLR() function from the torch.optim.lr_scheduler() class to obtain an LR scheduler which reaches its peak at the 5th epoch. Our goal is to achieve **90%** accuracy within **ONLY 24 epochs** where the learning rate reaches its max at epoch 5 (model, however, was only able to reach **86.8%** Validation accuracy with the selected max LR within 24 epochs).<br/>
 
 *   No. of Parameters (same as in original ResNet18 Model): **6,573,130**
 *   The only transforms applied on the training dataset are [Padding > RandomCrop > HorizontalFlip > Cutout] as shown [here](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/0b0750c6c16a9c500f646257427f8607dcc7f4ec/S11/utilities.py#L22).
@@ -30,11 +30,13 @@ ___
 # **Results:**
 *   Following are some of the images which were mis-classified by the model:- <br/>
 ![S11_misclassified_images](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S11/images/S11_misclassified_images.png?raw=true)
+
 ... and their corresponding GradCAM heatmaps:-
 ![S11_misclassified_gradcam](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S11/images/S11_misclassified_gradcam.png?raw=true)
 
 *   Following are some of the images which were correctly classified by the model: <br/>
 ![S11_correct_classified_images](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S11/images/S11_correct_classified_images.png?raw=true)
+
 ... and their corresponding GradCAM heatmaps:-
 ![S11_correct_classified_gradcam](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S11/images/S11_correct_classified_gradcam.png?raw=true)
 

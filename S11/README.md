@@ -7,10 +7,10 @@ No. of Parameters (same as in original ResNet18 Model): **11,173,962**
 ___
 
 # **Files:**
-*   **resnet.py**     : The main ResNet model file [[source](https://github.com/kuangliu/pytorch-cifar/blob/master/models/resnet.py "pytorch-cifar-resnet18")] which contains the ResNet18 class imported into the main `S10.ipynb` file while training/testing
+*   **resnet.py**     : The main ResNet model file [[source](https://github.com/kuangliu/pytorch-cifar/blob/master/models/resnet.py "pytorch-cifar-resnet18")] which contains the ResNet18 class imported into the main `S11.ipynb` file while training/testing
 *   **utilities.py**  : Functions for loading datasets (and creating Albumentation transformation), making train/test loaders, plotting images (dataset images along with GradCAM heatmaps) and loss/accuracy, getting mean and standard deviation of data, etc.
 *   **train_test.py** : Functions which can be called for training and testing the model.
-*   **config.py**     : Parameter presets, static variable values which are called throughout the code - required for running the various blocks in the main `S10.ipynb` file.
+*   **config.py**     : Parameter presets, static variable values which are called throughout the code - required for running the various blocks in the main `S11.ipynb` file.
 *   **lr_finder.py**     : The file which contains the LRfinder class. [[source](https://github.com/davidtvs/pytorch-lr-finder/blob/master/torch_lr_finder/lr_finder.py "lr_finder.py")]
 ___
 
@@ -34,9 +34,9 @@ ___
 
 # **Results:**
 *   Following are some of the images which were mis-classified by the model:- <br/>
-![S11_misclassified_images](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S10/images/S10_misclassified_images.png?raw=true)
+![S11_misclassified_images](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S11/images/S11_misclassified_images.png?raw=true)
 ... and their corresponding GradCAM heatmaps:-
-![S11_misclassified_gradcam](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S10/images/S10_misclassified_gradcam.png?raw=true)
+![S11_misclassified_gradcam](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S11/images/S11_misclassified_gradcam.png?raw=true)
 
 *   Following are some of the images which were correctly classified by the model: <br/>
 ![S11_correct_classified_images](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S11/images/S11_correct_classified_images.png?raw=true)

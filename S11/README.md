@@ -4,7 +4,7 @@ The objective is to implement the OneCycleLR scheduler to gradually update the l
 Below is an image of how learning rate changes in a cyclic LR updater schedule: <br/>
 ![S11_cyclicLRschedule.png](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S11/images/S11_cyclicLRschedule.png?raw=true)
 
-We will be using the OneCycleLR() function from the torch.optim.lr_scheduler() class to obtain an LR scheduler which reaches its peak at the 5th epoch. Our goal is to achieve **90%** accuracy within **ONLY 24 epochs** where the learning rate reaches its max at epoch 5 (model, however, was only able to reach **86.8%** Validation accuracy with the selected max LR within 24 epochs).<br/>
+We will be using the `OneCycleLR()` function from the `torch.optim.lr_scheduler()` class to obtain an LR scheduler which reaches its peak at the 5th epoch. Our goal is to achieve **90%** accuracy within **ONLY 24 epochs** where the learning rate reaches its max at epoch 5 (model, however, was only able to reach **86.8%** Validation accuracy with the selected max LR within 24 epochs).<br/>
 
 *   No. of Parameters (same as in original ResNet18 Model): **6,573,130**
 *   The only transforms applied on the training dataset are [Padding > RandomCrop > HorizontalFlip > Cutout] as shown [here](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/0b0750c6c16a9c500f646257427f8607dcc7f4ec/S11/utilities.py#L22).
@@ -15,7 +15,7 @@ ___
 *   **train_test.py** : Functions which can be called for training and testing the model.
 *   **config.py**     : Parameter presets, static variable values which are called throughout the code - required for running the various blocks in the main `S11.ipynb` file.
 *   **lr_finder.py**     : The file which contains the LRfinder class. [[source](https://github.com/davidtvs/pytorch-lr-finder/blob/master/torch_lr_finder/lr_finder.py "lr_finder.py")]
-*   **model_s11.py** : This contains the model_s11() class which contains the architecture for the model used in this code. This model uses 2 resnet basicblocks within it.
+*   **model_s11.py** : This contains the `model_s11()` class which contains the architecture for the model used in this code. This model uses 2 resnet basicblocks within it.
 ___
 
 # **Plots:**

@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 import tqdm.notebook as tq
 
-def train(model, device, train_loader, optimizer, epoch, L1_param=0,L2_param=0, cyclicLR=False):
+def train(model, device, train_loader, optimizer, epoch, L1_param=0,L2_param=0, cyclicLR=False, scheduler=None):
     model.train()
     pbar = tq.tqdm(train_loader,leave=False)
     correct,processed = 0,0

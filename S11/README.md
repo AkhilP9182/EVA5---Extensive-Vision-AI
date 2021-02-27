@@ -20,16 +20,16 @@ ___
 *   The low initial learning rate allows the network to start converging and as the learning rate is increased, it would eventually become large enough upon when the network diverges.
 *   Usually, a good static learning rate can be found **half-way on the descending loss curve**. In the plot below that would be between lr=`1E10-4` and lr=`1E10-2` (which is also the range within which we got our suggested lr=`2.12E-03`)
 
-![S11_LR_finder](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S10/images/LRFinder.png?raw=true)
+![S11_LR_finder](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S11/images/LRFinder.png?raw=true)
 ___
 
 # **Plots:**
 Following are the Validation Accuracy and Validation loss graphs generated (the training loss curve diverges from the test loss curve after a while, and it reaches almost 100%, indiciating an overfit. This could be reduced by increasing the L2 Regularization parameter while training): <br/>
 *   Validation and Training Accuracy v/s Epochs: <br/>
-![S11_accuracy](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S10/images/S10_accuracy.png?raw=true)
+![S11_accuracy](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S11/images/S11_accuracy.png?raw=true)
 
 *   Validation and Training Loss v/s Epochs: <br/>
-![S11_loss](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S10/images/S10_loss.png?raw=true)
+![S11_loss](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S11/images/S11_loss.png?raw=true)
 ___
 
 # **Results:**
@@ -39,9 +39,9 @@ ___
 ![S11_misclassified_gradcam](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S10/images/S10_misclassified_gradcam.png?raw=true)
 
 *   Following are some of the images which were correctly classified by the model: <br/>
-![S11_correct_classified_images](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S10/images/S10_correct_classified_images.png?raw=true)
+![S11_correct_classified_images](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S11/images/S11_correct_classified_images.png?raw=true)
 ... and their corresponding GradCAM heatmaps:-
-![S11_correct_classified_gradcam](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S10/images/S10_correct_classified_gradcam.png?raw=true)
+![S11_correct_classified_gradcam](https://github.com/AkhilP9182/EVA5---Extensive-Vision-AI/blob/main/S11/images/S11_correct_classified_gradcam.png?raw=true)
 
 ___
 

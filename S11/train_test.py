@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 import tqdm.notebook as tq
 
-def train(model, device, train_loader, optimizer, epoch,L1_param=0,L2_param=0):
+def train(model, device, train_loader, optimizer, epoch, L1_param=0,L2_param=0, cyclicLR=False):
     model.train()
     pbar = tq.tqdm(train_loader,leave=False)
     correct,processed = 0,0
@@ -27,6 +27,9 @@ def train(model, device, train_loader, optimizer, epoch,L1_param=0,L2_param=0):
         
         loss.backward()         # Calculates the d(loss)/dx for each parameter x, which are accumulated into x.grad
         optimizer.step()        # optimizer.step() multiples the learing rate with the x.grad and updates each model parameter
+
+        if cyclicLR:
+            scheduler.step() # NOrmally scheduler.step() is called in the main code, but this scheduler requires ITERATIONS as steps
         
         # Update pbar-tqdm
         pred        = y_pred.argmax(dim=1, keepdim=True)  # get the index of the max log-probability

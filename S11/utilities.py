@@ -200,7 +200,7 @@ def plot_misclassified(Net,MODEL_PATH,test_loader,
     model.load_state_dict(torch.load(MODEL_PATH))
     model = model.to(device)
     model.eval()
-    gradcam = GradCAM(model,model.layer4)
+    gradcam = GradCAM(model,model.Resblock_L3)
 
     with torch.no_grad():
         for batch_idx, (data, target) in enumerate(test_loader):
@@ -236,7 +236,7 @@ def plot_misclassified(Net,MODEL_PATH,test_loader,
                                                         classes[mis_pred[i]]))
     plt.show()
     
-    print("Following are the GradCam Heatmaps for those mis-classified images:-")
+    print("Following are the GradCam Heatmaps for those mis-classified images (for the resblock before final maxpool):-")
     fig2, axes2 = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
     for i in range(num_images):
         ax = axes2[i//num_col, i%num_col]
@@ -267,7 +267,7 @@ def plot_correct_classified(Net,MODEL_PATH,test_loader,
     model.load_state_dict(torch.load(MODEL_PATH))
     model = model.to(device)
     model.eval()
-    gradcam = GradCAM(model,model.layer4)
+    gradcam = GradCAM(model,model.Resblock_L3)
 
     with torch.no_grad():
         for batch_idx, (data, target) in enumerate(test_loader):
@@ -303,7 +303,7 @@ def plot_correct_classified(Net,MODEL_PATH,test_loader,
                                                         classes[correct_pred[i]]))
     plt.show()
 
-    print("Following are the GradCam Heatmaps for those correctly classified images:-")
+    print("Following are the GradCam Heatmaps for those correctly classified images (for the resblock before final maxpool):-")
     fig2, axes2 = plt.subplots(num_row, num_col, figsize=(1.8*num_col,2.5*num_row))
     for i in range(num_images):
         ax = axes2[i//num_col, i%num_col]

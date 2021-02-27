@@ -19,8 +19,8 @@ class AlbumentateTrainData(Dataset):
         self.mean       = mean
         self.std        = std
         self.transforms = A.Compose([
-            A.PadIfNeeded (min_height=40, min_width=40, border_mode=2, always_apply=True, p=1.0),
-            # border_mode = 2 corresponds to cv2.BORDER_REFLECT, where edge pixels are reflected for the padding
+            A.PadIfNeeded (min_height=40, min_width=40, border_mode=0, value=[0, 0, 0], always_apply=True),
+            # border_mode = 0 corresponds to cv2.BORDER_CONSTANT
             A.RandomCrop(32, 32, p=1),
             A.HorizontalFlip(p=0.5),
             A.Cutout(num_holes=4, max_h_size=8, max_w_size=8, fill_value=self.mean, p=0.5),

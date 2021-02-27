@@ -15,7 +15,6 @@ def Cyclic_LR_Plot(lr_min, lr_max, total_iterations, stepsize):
     ax.set_title('LR v/s iterations for Cyclic LR', fontsize=18)
     ax.set_xlabel('Iterations', fontsize=14)
     ax.set_ylabel('Learning Rate', fontsize=14)
-    print(len(cycles),len(ratio),len(lrt))
     ax.plot(lr_t,color='b')
 
     # Makinf upper and lower bounds
